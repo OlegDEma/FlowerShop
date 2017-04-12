@@ -40,6 +40,8 @@ public class BrandController {
 	}
 	//loxloxlox
 
+	//EZ AM
+
 	@RequestMapping(value="/deleteBrand/{id}",method = RequestMethod.GET)
 	public String deleteBrand(HttpSession session,@PathVariable String id){
 		Brand brand = brandService.findOne(Integer.parseInt(id));
