@@ -61,6 +61,12 @@ public class BrandController {
 		
 		return "redirect:/adminpanel";
 	}
+    @RequestMapping(value="/qwe",method = RequestMethod.GET)
+    public String qwe(Model model){
+        model.addAttribute("brands", brandService.findAll());
+        model.addAttribute("brand",new Brand());
+        return "views-base-brand";
+    }
 	
 
 }
