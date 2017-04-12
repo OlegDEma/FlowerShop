@@ -20,7 +20,7 @@ public class BrandController {
 	@Autowired 
 	private BrandService brandService;
 
-
+//kkekekkeke
 	
 	
 	@RequestMapping(value="/addBrand",method = RequestMethod.GET)
