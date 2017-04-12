@@ -67,6 +67,14 @@ public class BrandController {
         model.addAttribute("brand",new Brand());
         return "views-base-brand";
     }
-	
+
+    @RequestMapping(value="/addBrand",method = RequestMethod.POST)
+    public String addkakasBrand(@ModelAttribute("brand") Brand brand,HttpSession session){
+
+        session.setAttribute("do","brand");
+        brandService.save(brand);
+
+        return "redirect:/adminpanel";
+    }
 
 }
