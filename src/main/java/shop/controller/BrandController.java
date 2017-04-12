@@ -20,8 +20,7 @@ public class BrandController {
 	@Autowired 
 	private BrandService brandService;
 
-
-
+//kkekekkeke
 	
 	
 	@RequestMapping(value="/addBrand",method = RequestMethod.GET)
@@ -40,7 +39,7 @@ public class BrandController {
 		return "redirect:/adminpanel";
 	}
 	//loxloxlox
-	
+
 	@RequestMapping(value="/deleteBrand/{id}",method = RequestMethod.GET)
 	public String deleteBrand(HttpSession session,@PathVariable String id){
 		Brand brand = brandService.findOne(Integer.parseInt(id));
