@@ -210,7 +210,7 @@
                                 <nav id="mainnav" class="mainnav">
                                     <ul class="menu">
                                         <li class="home parent">
-                                            <a href="index.html">Home</a>
+                                            <a href="/">Home</a>
                                             <ul class="submenu">
                                                 <li><a href="index.html">Home 01 </a></li>
                                                 <li><a href="index-3.html">Home Corporate</a></li>
@@ -218,9 +218,9 @@
                                         </li>
                                         <li><a href="about.html">About</a></li>
                                         <li><a href="services.html">Services</a></li>
-                                        <li class="parent"><a href="products">Product</a>
+                                        <li class="parent"><a href="products/">Product</a>
                                             <ul class="submenu">
-                                                <li><a href="products">Product Grid </a>
+                                                <li><a href="/products/">Product Grid </a>
                                                 </li>
                                                 <li><a href="product_list.html">Product List</a>
                                                 </li>

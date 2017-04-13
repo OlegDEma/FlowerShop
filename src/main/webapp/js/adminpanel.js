@@ -254,7 +254,7 @@ function page(id) {
 
 function nextPage() {
     $.ajax({
-        url: 'nextPage',
+        url: 'products/nextPage',
         data:({begin : $('#begin').attr('value'), end :  $('#end').attr('value')  }),
         method: "GET",
         success : function () {
@@ -268,7 +268,7 @@ function nextPage() {
 }
 function prevPage() {
     $.ajax({
-        url: 'prevPage',
+        url: 'products/prevPage',
         data:({begin : $('#begin').attr('value'), end :  $('#end').attr('value')  }),
         method: "GET",
         success : function () {

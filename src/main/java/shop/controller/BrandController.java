@@ -19,8 +19,6 @@ public class BrandController {
 	
 	@Autowired 
 	private BrandService brandService;
-
-//kkekekkeke
 	
 	
 	@RequestMapping(value="/addBrand",method = RequestMethod.GET)
@@ -38,10 +36,7 @@ public class BrandController {
 		
 		return "redirect:/adminpanel";
 	}
-	//loxloxlox
-
-	//EZ AM
-
+	
 	@RequestMapping(value="/deleteBrand/{id}",method = RequestMethod.GET)
 	public String deleteBrand(HttpSession session,@PathVariable String id){
 		Brand brand = brandService.findOne(Integer.parseInt(id));
@@ -63,20 +58,6 @@ public class BrandController {
 		
 		return "redirect:/adminpanel";
 	}
-    @RequestMapping(value="/qwe",method = RequestMethod.GET)
-    public String qwe(Model model){
-        model.addAttribute("brands", brandService.findAll());
-        model.addAttribute("brand",new Brand());
-        return "views-base-brand";
-    }
-
-    @RequestMapping(value="/addBrand",method = RequestMethod.POST)
-    public String addkakasBrand(@ModelAttribute("brand") Brand brand,HttpSession session){
-
-        session.setAttribute("do","brand");
-        brandService.save(brand);
-
-        return "redirect:/adminpanel";
-    }
+	
 
 }

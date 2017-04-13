@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="js/adminpanel.js"></script>
+<script type="text/javascript" src="http://localhost:8080/adminpanel.js"></script>
 <script type="text/javascript">
     if(${page} = 'login'){
         $('#main').css('display','none');
@@ -41,8 +41,8 @@
                         <aside class="widget woocommerce widget_product_categories">
                             <h3 class="widget-title">BY CATEGORIES</h3>
                             <ul class="product-categories">
-                                <li class="cat-item"><a href="#">Phone</a></li>
-                                <li class="cat-item"><a href="/sort/Mikrovolnovka">Mikrovolnovka</a></li>
+                                <li class="cat-item"><a href="/products/Phone">Phone</a></li>
+                                <li class="cat-item"><a href="/products/Mikrovolnovka">Mikrovolnovka</a></li>
                                 <li class="cat-item"><a href="#">Tables and Chair Sets</a></li>
                                 <li class="cat-item"><a href="#">Learning Stations</a></li>
                                 <li class="cat-item"><a href="#">Reading Corner</a></li>
@@ -163,15 +163,6 @@
                         </div> <!-- /.list-or-grid -->
 
                         <div class="flat-right flat-filter">
-                            <div class="flat-sortby">
-                                Sort By
-                                <select style="height: 32px; width: 109px" name="color" id="size" class="form-control">
-                                    <option value="">Size</option>
-                                    <option onclick="page()" value="6">6</option>
-                                    <option onclick="page()" value="12">12</option>
-                                    <option onclick="page()" value="15">15</option>
-                                </select>
-                            </div> <!-- /.flat-sortby -->
 
                             <div class="flat-showpost">
                                 Show
@@ -209,7 +200,7 @@
                                             <div class="item-img-info">
                                                 <div class="pimg">
                                                     <a href="product_detail.html" class="product-image">
-                                                        <img style="height: 247px; width: 252px" src="${product.image}" class="attachment-shop_catalog" alt="Images">
+                                                        <img style="height: 247px; width: 252px" src="http://localhost:8080/${product.image}" class="attachment-shop_catalog" alt="Images">
                                                     </a>
                                                 </div> <!-- /.pimg -->
 

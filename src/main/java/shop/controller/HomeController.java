@@ -257,176 +257,176 @@ public class HomeController {
 
 
 	//Product
-
-
-	@RequestMapping(value="/products",method = RequestMethod.GET)
-	public String addProduct(HttpSession session ,Model model , String sort){
+//
+//
+//	@RequestMapping(value="/products",method = RequestMethod.GET)
+//	public String addProduct(HttpSession session ,Model model , String sort){
+////			model.addAttribute("begin","1");
+////			model.addAttribute("end","6");
+//		System.out.println(sort);
+//		if (sort == null){
+//			model.addAttribute("products", productService.findAll());
+//		}else {
+//			List<Product> products = productService.sort(sort);
+//			model.addAttribute("products", products);
+//		}
+////		model.addAttribute("products", productService.findAll());
+////		System.out.println(session.getAttribute("begin"));
+////		session.invalidate();
+//		if (session.getAttribute("begin") == null){
 //			model.addAttribute("begin","1");
-//			model.addAttribute("end","6");
-		System.out.println(sort);
-		if (sort == null){
-			model.addAttribute("products", productService.findAll());
-		}else {
-			List<Product> products = productService.sort(sort);
-			model.addAttribute("products", products);
-		}
-//		model.addAttribute("products", productService.findAll());
-//		System.out.println(session.getAttribute("begin"));
-//		session.invalidate();
-		if (session.getAttribute("begin") == null){
-			model.addAttribute("begin","1");
-			model.addAttribute("end","12");
-		}else {
-//			System.out.println(session.getAttribute("begin"));
-//			System.out.println(session.getAttribute("end"));
-			String begin = (String) session.getAttribute("begin");
-			String end = (String) session.getAttribute("end");
-			model.addAttribute("begin",begin);
-			model.addAttribute("end",end);
-//			session.invalidate();
-		}
-		return "views-user-products";
-	}
-
-	@RequestMapping(value="/sort/{sort}",method = RequestMethod.GET)
-	public String sort(HttpSession session ,Model model,@PathVariable("sort") String sort){
-
-
-			List<Product> products = productService.sort(sort);
-		for (Product product: products) {
-			System.out.println(product.getCategory().getName());
-		}
-			model.addAttribute("products", products);
-
-		if (session.getAttribute("begin") == null){
-			model.addAttribute("begin","1");
-			model.addAttribute("end","12");
-		}else {
-//			System.out.println(session.getAttribute("begin"));
-//			System.out.println(session.getAttribute("end"));
-			String begin = (String) session.getAttribute("begin");
-			String end = (String) session.getAttribute("end");
-			model.addAttribute("begin",begin);
-			model.addAttribute("end",end);
-//			session.invalidate();
-		}
-		return "views-user-products";
-	}
-
-	@RequestMapping(value="/page",method = RequestMethod.GET)
-	public String page(HttpSession session, String id){
-		session.setAttribute("begin","7");
-		session.setAttribute("end","12");
-		return "redirect:/products";
-	}
-
-	@RequestMapping(value="/nextPage",method = RequestMethod.GET)
-	public String nextPage(HttpSession session, String begin , String end){
-
-		List<Product> products = productService.findAll();
-		int size = products.size();
-		int beginInt = Integer.parseInt(begin);
-		int endInt = Integer.parseInt(end);
-		if(endInt > size){
-			session.setAttribute("begin",String.valueOf(beginInt));
-			session.setAttribute("end", String.valueOf(endInt));
-		}else {
-			int newBegin = endInt+1;
-			int newEnd = newBegin+12-1;
-			session.setAttribute("begin",String.valueOf(newBegin));
-			session.setAttribute("end", String.valueOf(newEnd));
-		}
-
-
-
-//		session.setAttribute("begin",String.valueOf(newBegin));
-//		session.setAttribute("end", String.valueOf(newEnd));
-//		System.out.println(newBegin);
-//		System.out.println(newEnd);
-//		System.out.println("qwe");
-//		System.out.println(newBegin);
-//		System.out.println(newEnd);
-		return "redirect:/products";
-	}
-	@RequestMapping(value="/prevPage",method = RequestMethod.GET)
-	public String prevPage(HttpSession session, String begin , String end){
-
-		int beginInt = Integer.parseInt(begin);
-		int endInt = Integer.parseInt(end);
-
-		 endInt = beginInt-1;
-		 beginInt = endInt-12+1;
-		 if (beginInt < 1){
-			 session.setAttribute("begin","1");
-			 session.setAttribute("end","12");
-		 }else {
-			 session.setAttribute("begin",String.valueOf(beginInt));
-			 session.setAttribute("end", String.valueOf(endInt));
-		 }
-
-
-		System.out.println(beginInt);
-		System.out.println(endInt);
-//		System.out.println("qwe");
-//		System.out.println(newBegin);
-//		System.out.println(newEnd);
-		return "redirect:/products";
-	}
-
-	@RequestMapping(value="/addNewProduct",method = RequestMethod.GET)
-	public String addNewProduct(@ModelAttribute("product")Product product,@RequestParam("brand") String brand , @RequestParam("category") String category,
-			@RequestParam("man") String man,@RequestParam("model") String model){
-//		product.setBrand(brand);
-//		System.out.println(brand);
-//		System.out.println(brandService.findOne(Integer.parseInt(brand)));
-		product.setCategory(categoryService.findOne(Integer.parseInt(category)));
-		product.setBrand(brandService.findOne(Integer.parseInt(brand)));
-		product.setManager(managerService.findOne(Integer.parseInt(man)));
-//		System.out.println(manager);
-		product.setModel(modelService.findOne(Integer.parseInt(model)));
-//        System.out.println(product);
-        productService.save(product);
-//		System.out.println(br);
-		return "redirect:/adminpanel";
-	}
-
-	@RequestMapping(value="/deleteProduct/{id}",method = RequestMethod.GET)
-	public String deleteProduct(@PathVariable("id") String id){
-		productService.delete(Integer.parseInt(id));
-		return "redirect:/adminpanel";
-	}
-
-	@RequestMapping(value="/changeProduct/{id}",method = RequestMethod.GET)
-	public String changeProduct(HttpSession session, @PathVariable("id") String id, @RequestParam("value") String value, @RequestParam("whatChange") String whatChange, @RequestParam("brand") String brand){
-		Product product = productService.findOne(Integer.parseInt(id));
-		if(whatChange.equals("name")){
-			product.setName(value);
-			productService.update(product);
-		}else if(whatChange.equals("price")){
-			product.setPrice(Double.parseDouble(value));
-			productService.update(product);
-		}else if(whatChange.equals("brand")){
-			product.setBrand(brandService.findOne(Integer.parseInt(brand)));
-			productService.update(product);
-
-		}
-		session.setAttribute("do","change");
-
-
-
-
-		return "redirect:/adminpanel";
-	}
-
-
-    @RequestMapping(value = "/saveImageForProduct", method = RequestMethod.POST)
-    public String saveImageForProduct(Principal principal ,@RequestParam("id") String id ,@RequestParam MultipartFile image) {
-
-        productService.saveImageForProduct(id,image);
-
-
-		return "redirect:/adminpanel";
-    }
+//			model.addAttribute("end","12");
+//		}else {
+////			System.out.println(session.getAttribute("begin"));
+////			System.out.println(session.getAttribute("end"));
+//			String begin = (String) session.getAttribute("begin");
+//			String end = (String) session.getAttribute("end");
+//			model.addAttribute("begin",begin);
+//			model.addAttribute("end",end);
+////			session.invalidate();
+//		}
+//		return "views-user-products";
+//	}
+//
+//	@RequestMapping(value="/sort/{sort}",method = RequestMethod.GET)
+//	public String sort(HttpSession session ,Model model,@PathVariable("sort") String sort){
+//
+//
+//			List<Product> products = productService.sort(sort);
+//		for (Product product: products) {
+//			System.out.println(product.getCategory().getName());
+//		}
+//			model.addAttribute("products", products);
+//
+//		if (session.getAttribute("begin") == null){
+//			model.addAttribute("begin","1");
+//			model.addAttribute("end","12");
+//		}else {
+////			System.out.println(session.getAttribute("begin"));
+////			System.out.println(session.getAttribute("end"));
+//			String begin = (String) session.getAttribute("begin");
+//			String end = (String) session.getAttribute("end");
+//			model.addAttribute("begin",begin);
+//			model.addAttribute("end",end);
+////			session.invalidate();
+//		}
+//		return "views-user-products";
+//	}
+//
+//	@RequestMapping(value="/page",method = RequestMethod.GET)
+//	public String page(HttpSession session, String id){
+//		session.setAttribute("begin","7");
+//		session.setAttribute("end","12");
+//		return "redirect:/products";
+//	}
+//
+//	@RequestMapping(value="/nextPage",method = RequestMethod.GET)
+//	public String nextPage(HttpSession session, String begin , String end){
+//
+//		List<Product> products = productService.findAll();
+//		int size = products.size();
+//		int beginInt = Integer.parseInt(begin);
+//		int endInt = Integer.parseInt(end);
+//		if(endInt > size){
+//			session.setAttribute("begin",String.valueOf(beginInt));
+//			session.setAttribute("end", String.valueOf(endInt));
+//		}else {
+//			int newBegin = endInt+1;
+//			int newEnd = newBegin+12-1;
+//			session.setAttribute("begin",String.valueOf(newBegin));
+//			session.setAttribute("end", String.valueOf(newEnd));
+//		}
+//
+//
+//
+////		session.setAttribute("begin",String.valueOf(newBegin));
+////		session.setAttribute("end", String.valueOf(newEnd));
+////		System.out.println(newBegin);
+////		System.out.println(newEnd);
+////		System.out.println("qwe");
+////		System.out.println(newBegin);
+////		System.out.println(newEnd);
+//		return "redirect:/products";
+//	}
+//	@RequestMapping(value="/prevPage",method = RequestMethod.GET)
+//	public String prevPage(HttpSession session, String begin , String end){
+//
+//		int beginInt = Integer.parseInt(begin);
+//		int endInt = Integer.parseInt(end);
+//
+//		 endInt = beginInt-1;
+//		 beginInt = endInt-12+1;
+//		 if (beginInt < 1){
+//			 session.setAttribute("begin","1");
+//			 session.setAttribute("end","12");
+//		 }else {
+//			 session.setAttribute("begin",String.valueOf(beginInt));
+//			 session.setAttribute("end", String.valueOf(endInt));
+//		 }
+//
+//
+//		System.out.println(beginInt);
+//		System.out.println(endInt);
+////		System.out.println("qwe");
+////		System.out.println(newBegin);
+////		System.out.println(newEnd);
+//		return "redirect:/products";
+//	}
+//
+//	@RequestMapping(value="/addNewProduct",method = RequestMethod.GET)
+//	public String addNewProduct(@ModelAttribute("product")Product product,@RequestParam("brand") String brand , @RequestParam("category") String category,
+//			@RequestParam("man") String man,@RequestParam("model") String model){
+////		product.setBrand(brand);
+////		System.out.println(brand);
+////		System.out.println(brandService.findOne(Integer.parseInt(brand)));
+//		product.setCategory(categoryService.findOne(Integer.parseInt(category)));
+//		product.setBrand(brandService.findOne(Integer.parseInt(brand)));
+//		product.setManager(managerService.findOne(Integer.parseInt(man)));
+////		System.out.println(manager);
+//		product.setModel(modelService.findOne(Integer.parseInt(model)));
+////        System.out.println(product);
+//        productService.save(product);
+////		System.out.println(br);
+//		return "redirect:/adminpanel";
+//	}
+//
+//	@RequestMapping(value="/deleteProduct/{id}",method = RequestMethod.GET)
+//	public String deleteProduct(@PathVariable("id") String id){
+//		productService.delete(Integer.parseInt(id));
+//		return "redirect:/adminpanel";
+//	}
+//
+//	@RequestMapping(value="/changeProduct/{id}",method = RequestMethod.GET)
+//	public String changeProduct(HttpSession session, @PathVariable("id") String id, @RequestParam("value") String value, @RequestParam("whatChange") String whatChange, @RequestParam("brand") String brand){
+//		Product product = productService.findOne(Integer.parseInt(id));
+//		if(whatChange.equals("name")){
+//			product.setName(value);
+//			productService.update(product);
+//		}else if(whatChange.equals("price")){
+//			product.setPrice(Double.parseDouble(value));
+//			productService.update(product);
+//		}else if(whatChange.equals("brand")){
+//			product.setBrand(brandService.findOne(Integer.parseInt(brand)));
+//			productService.update(product);
+//
+//		}
+//		session.setAttribute("do","change");
+//
+//
+//
+//
+//		return "redirect:/adminpanel";
+//	}
+//
+//
+//    @RequestMapping(value = "/saveImageForProduct", method = RequestMethod.POST)
+//    public String saveImageForProduct(Principal principal ,@RequestParam("id") String id ,@RequestParam MultipartFile image) {
+//
+//        productService.saveImageForProduct(id,image);
+//
+//
+//		return "redirect:/adminpanel";
+//    }
 
 
 	//ProductDesc
