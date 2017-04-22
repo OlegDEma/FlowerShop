@@ -40,7 +40,7 @@
                             <li><a href=""><i class="fa fa-check-square-o"></i>Checkout</a></li>
                             <sec:authorize access="!isAuthenticated()">
 
-                                <li><a href="loginpage"><i class="fa fa-sign-in"></i>Sign In</a></li>
+                                <li><a href="/loginpage"><i class="fa fa-sign-in"></i>Sign In</a></li>
                             </sec:authorize>
                             <sec:authorize access="isAuthenticated()">
                                 <div style="display:none">
@@ -120,8 +120,8 @@
                 <div class="row">
                     <div class="col-md-12 padding-right-0">
                         <div class="flat-logo">
-                            <a href="index.html" title="Logo" >
-                                <img src="img/logo.png" alt="Logo">
+                            <a href="/home" title="Logo" >
+                                <img src="http://localhost:8080/img/logo.png" alt="Logo">
                             </a>
                         </div> <!-- /.flat-logo -->
 
@@ -138,7 +138,7 @@
 
                             <aside class="widget widget_shipping">
                                 <a href="#">
-                                    <img src="img/header/delivery.png" alt="Delivery">
+                                    <img src="http://localhost:8080/img/header/delivery.png" alt="Delivery">
                                     <span class="title">EVERY DAY FREE SHIPPING</span>
                                     <span>on onders over $560.00</span>
                                 </a>
@@ -146,7 +146,7 @@
 
                             <aside class="widget widget_shopping">
                                 <a href="#">
-                                    <img src="img/header/shop.png" alt="Delivery">
+                                    <img src="http://localhost:8080/img/header/shop.png" alt="Delivery">
                                     <span class="title">SHOPPING CART</span>
                                     <span>3 items</span> - <span class="blue" title="prices">$566.00</span>
                                 </a>
@@ -218,7 +218,7 @@
                                         </li>
                                         <li><a href="about.html">About</a></li>
                                         <li><a href="services.html">Services</a></li>
-                                        <li class="parent"><a href="products/">Product</a>
+                                        <li class="parent"><a href="/products/">Product</a>
                                             <ul class="submenu">
                                                 <li><a href="/products/">Product Grid </a>
                                                 </li>

@@ -5,6 +5,7 @@
 <script type="text/javascript" src="http://localhost:8080/adminpanel.js"></script>
 <script type="text/javascript">
 
+
 </script>
 <div class="flat-page-title flat-reset">
     <div class="container">
@@ -155,24 +156,27 @@
                         <div class="flat-right flat-filter">
 
                             <div class="flat-showpost">
-                                Sort
-                                <div class="form-group">
-                                    <select style="height: 32px; width: 109px" name="color" id="size" class="form-control">
+                                Show
+                                <div class="form-group"><form:form action="/products/${page}" method="GET">
+                                    <select style="height: 32px; width: 109px" name="typeOfSort" id="size" class="form-control">
                                         <option value=""> </option>
-                                        <option <%--onclick="typeOfSortt('desc')"--%> name="typeOfSort" value="desc"><a href="/products/${page}">priceqDow</a></option>
+                                        <option <%--onclick="typeOfSortt('desc')"--%> value="desc">priceqDow</option>
                                         <option onclick="typeOfSortt('esc')" value="priceUp">priceUp</option>
                                         <option onclick="typeOfSortt('name')" value="Name">Name</option>
                                     </select>
+                                    <button>sort</button>
+                                </form:form>
+
                                 </div>
                                 <%--<ul class="flat-blog-select">--%>
-                                    <%--<li>--%>
-                                        <%--<span>12</span>--%>
-                                        <%--<ul>--%>
-                                            <%--<li>12</li>--%>
-                                            <%--<li onclick="lol()">6</li>--%>
-                                            <%--<li>20</li>--%>
-                                        <%--</ul>--%>
-                                    <%--</li>--%>
+                                <%--<li>--%>
+                                <%--<span>12</span>--%>
+                                <%--<ul>--%>
+                                <%--<li>12</li>--%>
+                                <%--<li onclick="lol()">6</li>--%>
+                                <%--<li>20</li>--%>
+                                <%--</ul>--%>
+                                <%--</li>--%>
                                 <%--</ul> <!-- /.flat-blog-select-->--%>
 
                             </div><!-- /.flat-viewing -->
@@ -233,6 +237,60 @@
                         </ul>
                     </main> <!-- /.post-wrap -->
 
+                    <main style="display: none" id="six" class="post-wrap">
+                        <ul class="products-grid flat-reset"><%--/////////////////////////////////////////////////////////////////////////--%>
+                            <c:forEach var="product" items="${products}">
+
+                                <li class="item col-md-4 wide-first">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <div class="pimg">
+                                                    <a href="product_detail.html" class="product-image">
+                                                        <img style="height: 247px; width: 252px" src="${product.image}" class="attachment-shop_catalog" alt="Images">
+                                                    </a>
+                                                </div> <!-- /.pimg -->
+
+                                                <div class="box-hover">
+                                                    <ul class="add-to-links">
+                                                        <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
+                                                        <li><a class="add_to_cart_button" href="#" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>
+                                                        <li><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
+                                                    </ul>
+                                                </div> <!-- /.box-hover -->
+                                            </div> <!-- /.item-img-info -->
+                                        </div> <!-- /.item-img -->
+
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title">
+                                                    <a href="product_detail.html">${product.name} ${product.model.nameOfModel}</a>
+                                                </div> <!-- /.item-title -->
+
+                                                <div class="item-content">
+                                                    <div class="item-price">
+                                                        <div class="price-box">
+                                                            <ins><span class="amount">$${product.price}</span></ins>
+                                                        </div>
+                                                    </div> <!-- /.item-price -->
+
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="rating-box">
+                                                                <div style="width:60%" class="rating"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- /.rating -->
+                                                </div> <!-- /.item-content -->
+                                            </div> <!-- /.info-inner -->
+                                        </div> <!-- /.item-info -->
+                                    </div> <!-- /.item-inner -->
+                                </li>
+
+                            </c:forEach>
+
+                        </ul>
+                    </main>
 
 
                     <div class="flat-top-bar-shop flat-bottom-bar-shop flat-reset">

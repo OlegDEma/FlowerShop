@@ -376,7 +376,7 @@
     <div id="menu1">
         <%--<div class="col-md-3">--%>
             <div class="formProd" >
-                <form:form modelAttribute="product" id="contact-form" class="form" action="addNewProduct" method="get" role="form">
+                <form:form modelAttribute="product" id="contact-form" class="form" action="products/addNewProduct" method="get" role="form">
                     <ol class="inBlock">
                         <li>
                     <div class="form-group">
@@ -540,7 +540,7 @@
             </form:form>
             </div>
             <div name="photo" id="" style="margin-left: 50px; display: none;">
-                <form:form action="./saveImageForProduct?${_csrf.parameterName}=${_csrf.token}"
+                <form:form action="./products/saveImageForProduct?${_csrf.parameterName}=${_csrf.token}"
                            method="post" enctype="multipart/form-data" id="photo">
                     <input type="text" name="id" value="${flower.id}" >
                     <input type="file" name="image">

@@ -15,6 +15,8 @@ $(document).ready(function() {
     }else if(a == "delivery"){
         menu("createDelivery");
     }
+
+    // alert(location.href);
 //        alert(a);
 })
 // function menu(e) {
@@ -226,26 +228,21 @@ function photo(id) {
 
 
 }
-function lox() {
-    // var form = $('#photo').attr('action','saveImageForProduct?${_csrf.parameterName}=${_csrf.token}');
-    alert("lox");
 
-
-}
-
-$('#qwe').onclick(function () {
-    alert('qwe');
-})
-
-function page(id) {
+function typeOfSortt(sort) {
+      var val = $('#page').val();
     $.ajax({
-        url: 'page',
-        data:({id : id}),
+        url: '/products/'+val,
+        // type:"POST",
+        async  : false,
+
+        cache  : false,
+        data:({typeOfSort : sort}),
         method: "GET",
         success : function () {
 
 
-        location.reload();
+        // location.reload();
 
         }
 
@@ -254,8 +251,8 @@ function page(id) {
 
 function nextPage() {
     $.ajax({
-        url: 'products/nextPage',
-        data:({begin : $('#begin').attr('value'), end :  $('#end').attr('value')  }),
+        url: 'nextPage',
+        data:({begin : $('#begin').attr('value'), end :  $('#end').attr('value') , page :  $('#page').attr('value') }),
         method: "GET",
         success : function () {
 
@@ -268,8 +265,8 @@ function nextPage() {
 }
 function prevPage() {
     $.ajax({
-        url: 'products/prevPage',
-        data:({begin : $('#begin').attr('value'), end :  $('#end').attr('value')  }),
+        url: 'prevPage',
+        data:({begin : $('#begin').attr('value'), end :  $('#end').attr('value') , page :  $('#page').attr('value') }),
         method: "GET",
         success : function () {
 

@@ -37,6 +37,8 @@ public class User implements UserDetails {
 	private String Image;
 	
 	 private boolean enabled;
+
+	 private boolean accountNonLocked;
 	
 	private String mail;
 	
@@ -159,7 +161,10 @@ public class User implements UserDetails {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
 
 	public String getImage() {
 		return Image;
@@ -190,7 +195,7 @@ public class User implements UserDetails {
 	}
 
 	public boolean isAccountNonLocked() {
-		return true;
+		return accountNonLocked;
 	}
 
 	public boolean isCredentialsNonExpired() {

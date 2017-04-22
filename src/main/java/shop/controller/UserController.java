@@ -48,6 +48,7 @@ public class UserController {
 
 	        User user = userService.findByUuid(uuid);
 	        user.setEnabled(true);
+	        user.setAccountNonLocked(true);
 	        
 
 	        userService.update(user);

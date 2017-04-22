@@ -638,7 +638,7 @@ public class HomeController {
 		model.addAttribute("user", new User());
 		
 
-		return "views-base-registration";
+		return "views-admin-registration";
 	}
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newJsp(Model model) {

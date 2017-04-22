@@ -34,7 +34,7 @@
 
 
         <!-- Responsive Style -->
-        <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/responsive.css">
+               <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/responsive.css">
 
         <!-- Jquery UI -->
         <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/jquery-ui.min.css">
@@ -62,8 +62,9 @@
 </head>
 
 <body>
-<div>
+<div><div>
     <tiles:insertAttribute name="header"/>
+</div>
 
     <div class="container-fluid">
         <%--<!-- 	сюди jsp файл з ім'ям body -->--%>
@@ -73,6 +74,7 @@
 </div>
 </body>
 <!-- Javascript -->
+<script type="text/javascript" src="http://localhost:8080/js/adminpanel.js"></script>
 <script type="text/javascript" src="http://localhost:8080/js/jquery.min.js"></script>
 <script type="text/javascript" src="http://localhost:8080/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://localhost:8080/js/jquery.easing.js"></script>
@@ -93,15 +95,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 <script type="text/javascript">
-    if(${page} = 'login'){
-        $('#main').css('display','none');
-    }
-
-    function set() {
-//        $('#twelve').css('display','none');
-//        $('#six').css('display','block');
-        alert("qwe");
-    }
 
 </script>
 </html>

@@ -17,4 +17,6 @@ public interface ProductService {
 	Product findByName(String name);
 	public void saveImageForProduct(String id, MultipartFile multipartFile);
 	List<Product> sort(String nameOfCategory);
+	public List<Product> findAllByPriceESC(String sort);
+	public List<Product> findAllByPriceDESC(String sort);
 }

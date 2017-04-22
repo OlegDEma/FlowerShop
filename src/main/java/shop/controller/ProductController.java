@@ -51,7 +51,7 @@ public class ProductController {
     @Autowired
     private CartService cartService;
 
-    @RequestMapping(value="/",method = RequestMethod.GET)
+    @RequestMapping(value={"/"},method = RequestMethod.GET)
     public String addProduct(HttpSession session , Model model , String sort){
 //			model.addAttribute("begin","1");
 //			model.addAttribute("end","6");
@@ -81,89 +81,89 @@ public class ProductController {
     }
 
     @RequestMapping(value="/{sort}",method = RequestMethod.GET)
-    public String sort(HttpSession session ,Model model,@PathVariable("sort") String sort){
+    public String sort(HttpSession session ,Model model,@PathVariable("sort") String sort, String typeOfSort){
+
+        System.out.println(sort);
+        System.out.println(typeOfSort);
+        if (typeOfSort == null){
 
 
-        List<Product> products = productService.sort(sort);
-        for (Product product: products) {
-            System.out.println(product);
-        }
-        model.addAttribute("products", products);
+            List<Product> products = productService.sort(sort);
 
-        if (session.getAttribute("begin") == null){
-            model.addAttribute("begin","1");
-            model.addAttribute("end","12");
+            model.addAttribute("products", products);
+            model.addAttribute("page",sort);
         }else {
-//			System.out.println(session.getAttribute("begin"));
-//			System.out.println(session.getAttribute("end"));
-            String begin = (String) session.getAttribute("begin");
-            String end = (String) session.getAttribute("end");
-            model.addAttribute("begin",begin);
-            model.addAttribute("end",end);
-//			session.invalidate();
-        }
-        return "views-user-products";
-    }
-
-    @RequestMapping(value="/page",method = RequestMethod.GET)
-    public String page(HttpSession session, String id){
-        session.setAttribute("begin","7");
-        session.setAttribute("end","12");
-        return "redirect:/products";
-    }
-
-    @RequestMapping(value="/nextPage",method = RequestMethod.GET)
-    public String nextPage(HttpSession session, String begin , String end){
-
-        List<Product> products = productService.findAll();
-        int size = products.size();
-        int beginInt = Integer.parseInt(begin);
-        int endInt = Integer.parseInt(end);
-        if(endInt > size){
-            session.setAttribute("begin",String.valueOf(beginInt));
-            session.setAttribute("end", String.valueOf(endInt));
-        }else {
-            int newBegin = endInt+1;
-            int newEnd = newBegin+12-1;
-            session.setAttribute("begin",String.valueOf(newBegin));
-            session.setAttribute("end", String.valueOf(newEnd));
+            if (typeOfSort.equals("desc")){
+                for (Product product: productService.findAllByPriceDESC(sort)) {
+                    System.out.println(product);
+                }
+                 model.addAttribute("products",productService.findAllByPriceDESC(sort));
+            }
         }
 
-
-
-//		session.setAttribute("begin",String.valueOf(newBegin));
-//		session.setAttribute("end", String.valueOf(newEnd));
-//		System.out.println(newBegin);
-//		System.out.println(newEnd);
-//		System.out.println("qwe");
-//		System.out.println(newBegin);
-//		System.out.println(newEnd);
-        return "redirect:/products";
+        return "views-user-shopBy";
     }
-    @RequestMapping(value="/prevPage",method = RequestMethod.GET)
-    public String prevPage(HttpSession session, String begin , String end){
-
-        int beginInt = Integer.parseInt(begin);
-        int endInt = Integer.parseInt(end);
-
-        endInt = beginInt-1;
-        beginInt = endInt-12+1;
-        if (beginInt < 1){
-            session.setAttribute("begin","1");
-            session.setAttribute("end","12");
-        }else {
-            session.setAttribute("begin",String.valueOf(beginInt));
-            session.setAttribute("end", String.valueOf(endInt));
-        }
 
 
-        System.out.println(beginInt);
-        System.out.println(endInt);
-//		System.out.println("qwe");
-//		System.out.println(newBegin);
-//		System.out.println(newEnd);
-        return "redirect:/products";
-    }
+//    @RequestMapping(value="/page",method = RequestMethod.GET)
+//    public String page(HttpSession session, String id){
+//        session.setAttribute("begin","7");
+//        session.setAttribute("end","12");
+//        return "redirect:/products";
+//    }
+//
+//    @RequestMapping(value="/nextPage",method = RequestMethod.GET)
+//    public String nextPage(HttpSession session, String begin , String end , String page){
+//
+//        List<Product> products = productService.findAll();
+//        int size = products.size();
+//        int beginInt = Integer.parseInt(begin);
+//        int endInt = Integer.parseInt(end);
+//        if(endInt > size){
+//            session.setAttribute("begin",String.valueOf(beginInt));
+//            session.setAttribute("end", String.valueOf(endInt));
+//        }else {
+//            int newBegin = endInt+1;
+//            int newEnd = newBegin+12-1;
+//            session.setAttribute("begin",String.valueOf(newBegin));
+//            session.setAttribute("end", String.valueOf(newEnd));
+//        }
+//
+//
+//
+////		session.setAttribute("begin",String.valueOf(newBegin));
+////		session.setAttribute("end", String.valueOf(newEnd));
+////		System.out.println(newBegin);
+////		System.out.println(newEnd);
+////		System.out.println("qwe");
+////		System.out.println(newBegin);
+////		System.out.println(newEnd);
+//        return "redirect:/sort/"+page;
+//    }
+//    @RequestMapping(value="/prevPage",method = RequestMethod.GET)
+//    public String prevPage(HttpSession session, String begin , String end){
+//
+//        int beginInt = Integer.parseInt(begin);
+//        int endInt = Integer.parseInt(end);
+//
+//        endInt = beginInt-1;
+//        beginInt = endInt-12+1;
+//        if (beginInt < 1){
+//            session.setAttribute("begin","1");
+//            session.setAttribute("end","12");
+//        }else {
+//            session.setAttribute("begin",String.valueOf(beginInt));
+//            session.setAttribute("end", String.valueOf(endInt));
+//        }
+//
+//
+//        System.out.println(beginInt);
+//        System.out.println(endInt);
+////		System.out.println("qwe");
+////		System.out.println(newBegin);
+////		System.out.println(newEnd);
+//        return "redirect:/products";
+//    }
 
     @RequestMapping(value="/addNewProduct",method = RequestMethod.GET)
     public String addNewProduct(@ModelAttribute("product")Product product, @RequestParam("brand") String brand , @RequestParam("category") String category,

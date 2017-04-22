@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -90,6 +92,30 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<Product> findAllByPriceESC(String sort) {
+		List<Product> products = sort(sort);
+		Collections.sort(products,new Comparator<Product>() {
+			@Override
+			public int compare(Product o1, Product o2) {
+				return (int) (o1.getPrice() - o2.getPrice());
+			}
+		});
+		return products;
+	}
+
+	@Override
+	public List<Product> findAllByPriceDESC(String sort) {
+		List<Product> products = sort(sort);
+		Collections.sort(products,new Comparator<Product>() {
+			@Override
+			public int compare(Product o1, Product o2) {
+				return (int) (o2.getPrice() - o1.getPrice());
+			}
+		});
+		return products;
 	}
 
 
