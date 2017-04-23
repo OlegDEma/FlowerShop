@@ -1057,6 +1057,9 @@
                     <c:forEach var="user" items="${users}">
                         <tr>
                             <td>${user.name}</td>
+                            <td>${user.accountNonLocked}</td>
+                            <td>  <a class="btnn" href="ban/${user.id}" >ban</a></td>
+                            <td>  <a class="btnn" href="unban/${user.id}">unban</a></td>
                             <%--<td> <a class="btnn" href="deleteUser/${user.id}" >Delete brand</a></td>--%>
                             <%--<td>  <a class="btnn" onclick="" >Ban</a></td>--%>
                             <%--<td>  <a class="btnn" onclick="" >UnBan</a></td>--%>

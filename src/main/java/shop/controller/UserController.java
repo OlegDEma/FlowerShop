@@ -55,6 +55,24 @@ public class UserController {
 
 	        return "redirect:/";
 	    }
+
+	@RequestMapping(value = "/ban/{id}", method = RequestMethod.GET)
+	public String ban(@PathVariable String id) {
+
+		User user = userService.ban(Integer.parseInt(id));
+		userService.update(user);
+
+		return "redirect:/adminpanel";
+	}
+
+	@RequestMapping(value = "/unban/{id}", method = RequestMethod.GET)
+	public String unban(@PathVariable String id) {
+
+		User user = userService.unban(Integer.parseInt(id));
+		userService.update(user);
+
+		return "redirect:/adminpanel";
+	}
 	 
 
 }

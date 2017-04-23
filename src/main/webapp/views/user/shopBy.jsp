@@ -157,15 +157,17 @@
 
                             <div class="flat-showpost">
                                 Show
-                                <div class="form-group"><form:form action="/products/${page}" method="GET">
-                                    <select style="height: 32px; width: 109px" name="typeOfSort" id="size" class="form-control">
-                                        <option value=""> </option>
-                                        <option <%--onclick="typeOfSortt('desc')"--%> value="desc">priceqDow</option>
-                                        <option onclick="typeOfSortt('esc')" value="priceUp">priceUp</option>
-                                        <option onclick="typeOfSortt('name')" value="Name">Name</option>
-                                    </select>
-                                    <button>sort</button>
-                                </form:form>
+                                <div class="form-group">
+                                    <%--<select style="height: 32px; width: 109px" name="typeOfSort" id="size" class="form-control">--%>
+                                        <%--<option value=""> </option>--%>
+                                        <%--<option onclick="typeOfSortt('desc')" value="desc">priceqDow</option>--%>
+                                        <%--<option onclick="typeOfSortt('esc')" value="priceUp">priceUp</option>--%>
+                                        <%--<option onclick="typeOfSortt('name')" value="Name">Name</option>--%>
+                                    <%--</select>--%>
+                                        <a href="/products/${page}/desc">desc</a>
+                                        <a href="/products/${page}/esc">esc</a>
+                                        <a href="/products/${page}/name">name</a>
+
 
                                 </div>
                                 <%--<ul class="flat-blog-select">--%>
@@ -446,4 +448,4 @@
 </div>
 <input type="hidden" id="begin" value="${begin}">
 <input type="hidden" id="end" value="${end}">
-<input type="hidden" id="page" value="${page}">
+<input  name="page" id="page" value="${page}">

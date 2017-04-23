@@ -157,12 +157,15 @@
                             <div class="flat-showpost">
                                 Sort
                                 <div class="form-group">
-                                    <select style="height: 32px; width: 109px" name="color" id="size" class="form-control">
-                                        <option value=""> </option>
-                                        <option <%--onclick="typeOfSortt('desc')"--%> name="typeOfSort" value="desc"><a href="/products/${page}">priceqDow</a></option>
-                                        <option onclick="typeOfSortt('esc')" value="priceUp">priceUp</option>
-                                        <option onclick="typeOfSortt('name')" value="Name">Name</option>
-                                    </select>
+                                    <%--<select style="height: 32px; width: 109px" name="color" id="size" class="form-control">--%>
+                                        <%--<option value=""> </option>--%>
+                                        <%--<option &lt;%&ndash;onclick="typeOfSortt('desc')"&ndash;%&gt; name="typeOfSort" value="desc"><a href="/products/${page}">priceqDow</a></option>--%>
+                                        <%--<option onclick="typeOfSortt('esc')" value="priceUp">priceUp</option>--%>
+                                        <%--<option onclick="typeOfSortt('name')" value="Name">Name</option>--%>
+                                    <%--</select>--%>
+                                        <a href="">desc</a>
+                                        <a href="">esc</a>
+                                        <a href="">name</a>
                                 </div>
                                 <%--<ul class="flat-blog-select">--%>
                                     <%--<li>--%>

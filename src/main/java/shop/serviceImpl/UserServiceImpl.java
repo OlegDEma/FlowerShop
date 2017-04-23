@@ -195,5 +195,20 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 		}
 	}
 
+	@Override
+	public User ban(int id) {
+		User user = userDao.findOne(id);
+		user.setAccountNonLocked(false);
+		return user;
+	}
+
+	@Override
+	public User unban(int id) {
+		User user = userDao.findOne(id);
+		user.setAccountNonLocked(true);
+		return user;
+
+	}
+
 
 }

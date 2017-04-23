@@ -118,5 +118,18 @@ public class ProductServiceImpl implements ProductService {
 		return products;
 	}
 
+	@Override
+	public List<Product> findAllByName(String sort) {
+		List<Product> products = sort(sort);
+		Collections.sort(products,new Comparator<Product>() {
+			@Override
+			public int compare(Product o1, Product o2) {
+				return o1.getName().compareTo(o2.getName());
+
+			}
+		});
+		return products;
+	}
+
 
 }

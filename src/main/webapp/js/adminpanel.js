@@ -229,24 +229,26 @@ function photo(id) {
 
 }
 
+
 function typeOfSortt(sort) {
       var val = $('#page').val();
-    $.ajax({
-        url: '/products/'+val,
-        // type:"POST",
-        async  : false,
-
-        cache  : false,
-        data:({typeOfSort : sort}),
-        method: "GET",
-        success : function () {
-
-
-        // location.reload();
-
-        }
-
-    })
+    // $.ajax({
+    //     url: '/products/'+val,
+    //     // type:"POST",
+    //     async  : false,
+    //
+    //     cache  : false,
+    //     data:({typeOfSort : sort}),
+    //     method: "GET",
+    //     success : function () {
+    //
+    //
+    //     // location.reload();
+    //
+    //     }
+    //
+    // })
+    window.location.href ="http://localhost:8080/products/Phone/"+sort;
 }
 
 function nextPage() {

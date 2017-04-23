@@ -19,4 +19,5 @@ public interface ProductService {
 	List<Product> sort(String nameOfCategory);
 	public List<Product> findAllByPriceESC(String sort);
 	public List<Product> findAllByPriceDESC(String sort);
+	public  List<Product> findAllByName(String sort);
 }

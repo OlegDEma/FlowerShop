@@ -24,5 +24,7 @@ public interface UserService{
 	void sendMail(String theme, String mailBody, String email);
 	User findByUuid(String uuid);
 	 public void saveImage(Principal principal, MultipartFile multipartFile);
+	 User ban(int id);
+	 User unban(int id);
 
 }
