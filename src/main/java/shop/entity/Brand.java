@@ -28,7 +28,7 @@ public class Brand {
 	}
 
 	public Brand() {
-		super();
+
 	}
 	
 

@@ -3,6 +3,8 @@ package shop.service;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.multipart.MultipartFile;
 import shop.entity.Product;
 
@@ -20,4 +22,8 @@ public interface ProductService {
 	public List<Product> findAllByPriceESC(String sort);
 	public List<Product> findAllByPriceDESC(String sort);
 	public  List<Product> findAllByName(String sort);
+	Page<Product> findAll(int currentPage, int numberOfItem);
+	Page<Product> findAll(int currentPage, int numberOfItem, Sort sort);
+	public Page<Product> findAll(int currentPage, int numberOfItem, String category);
+	public  String getCartInfoProduct(Principal principal);
 }

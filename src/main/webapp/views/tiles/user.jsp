@@ -25,7 +25,7 @@
 
         <!-- Mega menu -->
         <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/megamenu.css">
-
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/cart.css">
         <!-- Theme Style -->
         <link rel="stylesheet" type="text/css" href="http://localhost:8080/css/style.css">
 
@@ -92,8 +92,7 @@
 <script type="text/javascript" src="http://localhost:8080/js/jquery.themepunch.tools.min.js"></script>
 <script type="text/javascript" src="http://localhost:8080/js/jquery.themepunch.revolution.min.js"></script>
 <script type="text/javascript" src="http://localhost:8080/js/slider.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script type="text/javascript">
 
 </script>

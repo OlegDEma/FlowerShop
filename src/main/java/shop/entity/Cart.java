@@ -18,11 +18,11 @@ public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
+
 	private String name;
 	
 	private double total;
-	
+
 	@ManyToOne
 	private User user;
 	
@@ -32,8 +32,8 @@ public class Cart {
 	
 	public Cart() {
 		super();
-	}	
-	
+	}
+
 
 	public Cart(String name) {
 		super();

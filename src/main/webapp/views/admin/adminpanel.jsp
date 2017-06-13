@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="normalize.css" charset="utf-8" />
     <link rel="stylesheet" href="admin--test.css" charset="utf-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <style>
         *,
         *::before,
@@ -319,10 +320,78 @@
         }
     </style>
 </head>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-<script type="text/javascript">
+<script>
 
+//function doAjax(){
+//     var branqd = {
+//
+//        name: $('#brandName').val()
+//
+//    }
+//
+//    $.ajax({
+//        url:'checkName',
+//        contentType: 'application/json; charset=UTF-8',
+//        dataType: 'json',
+//        data: JSON.stringify(brand),
+////        data:({name : $('#brandName').val()}),
+//        success:function(data){
+//            alert(data);
+//        }
+//    });
+//}
+$(document).ready(function() {
+    getTypes();
+});
+function doaAjax() {
+    var brand;
+    brand = {
+        name: $('#brandName').val()
+    };
+    $.ajax({
+        url: 'rest?' + $('input[name=csrf_name]').val() + "=" + $('input[name=csrf_value]').val(),
+        method: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(brand),
+        success:function(data){
+            getTypes();
+            $('#brandName').val("");
+//            alert("SAVED");
+        },
+        error: function(xhr, status, errorThrown) {
+            alert("add faild "+ status + " " + errorThrown + " " + xhr);
+        }
+    });
+
+}
+
+function loadBrand() {
+
+    $.ajax({
+
+        url: 'load?' + $('input[name=csrf_name]').val() + "=" + $('input[name=csrf_value]').val(),
+        method: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+//           dataType: 'json',
+        success: function () {
+        alert("EZZZZ");
+//        alert(response.name);
+//            var all = '';
+//
+//            for (var i = 0; i < res.length; i++) {
+//                var index = res[i].id;
+//                all += '<div class="box">'+res[i].name +'<a onclick="deleteCountry(' + index + ')"> delete </div><br>';
+//            }
+//            document.querySelector('.all').innerHTML = all;
+        },
+        error:function () {
+            alert("ERROR");
+        }
+    })
+
+}
 
 
 </script>
@@ -330,45 +399,44 @@
 <body class="admin">
 
 <header class="admin__statusbar flex--center">
-    <span class="home"><i class="fa fa-home"></i><a href="/home">Home</a></span>
-    <span id="username"><i class="fa fa-user"></i>Tycho Atsma</span>
+    <span class="home"><i class="fa fa-home"></i><a href="/home">Головна</a></span>
 </header>
 
 <nav class="admin__sidepanel">
     <ul>
         <li onclick="menu('createProduct')">
-            <i class="fa fa-file-text-o"></i>Create Product
+            <i class="fa fa-file-text-o"></i>Створити продукт
         </li>
         <li onclick="menu('modifyProduct')">
-            <i class="fa fa-pencil-square-o"></i>Modify Product
+            <i class="fa fa-pencil-square-o"></i>Редагувати продукт
         </li>
         <li onclick="menu('createBrand')">
-            <i class="fa fa-times-circle-o"></i>Brand
+            <i class="fa fa-times-circle-o"></i>Бренд
         </li>
         <li onclick="menu('createModel')">
-            <i class="fa fa-times-circle-o"></i>Model
+            <i class="fa fa-times-circle-o"></i>Модель
         </li>
         <li onclick="menu('createManager')">
-            <i class="fa fa-times-circle-o"></i>Manager
+            <i class="fa fa-times-circle-o"></i>Менеджер
         </li>
         <li onclick="menu('createCategory')">
-            <i class="fa fa-times-circle-o"></i>Category
+            <i class="fa fa-times-circle-o"></i>Категорія
         </li>
         <li onclick="menu('createSubcategory')">
-            <i class="fa fa-times-circle-o"></i>Subcategory
+            <i class="fa fa-times-circle-o"></i>Під-категорія
         </li>
-        <li onclick="menu('createDelivery')">
-            <i class="fa fa-times-circle-o"></i>Delivery
-        </li>
-        <li onclick="menu('Sale')">
-            <i class="fa fa-times-circle-o"></i>Sale
-        </li>
+        <%--<li onclick="menu('createDelivery')">--%>
+            <%--<i class="fa fa-times-circle-o"></i>Delivery--%>
+        <%--</li>--%>
+        <%--<li onclick="menu('Sale')">--%>
+            <%--<i class="fa fa-times-circle-o"></i>Sale--%>
+        <%--</li>--%>
         <li onclick="menu('User')">
-            <i class="fa fa-times-circle-o"></i>User
+            <i class="fa fa-times-circle-o"></i>Користувачі
         </li>
-        <li onclick="lox()">
-            <i class="fa fa-times-circle-o"></i>lox
-        </li>
+        <%--<li onclick="lox()">--%>
+            <%--<i class="fa fa-times-circle-o"></i>lox--%>
+        <%--</li>--%>
     </ul>
 </nav>
 
@@ -380,25 +448,25 @@
                     <ol class="inBlock">
                         <li>
                     <div class="form-group">
-                        <label class="form-label" for="name">Name</label>
+                        <label class="form-label" for="name">Ім'я</label>
                         <form:input  path="name" type="text" class="form-control" id="name" name="name" placeholder="Your name" tabindex="1"  />
                     </div>
                         </li>
                         <li>
                         <div class="form-group">
-                        <label class="form-label" for="email">Price</label>
+                        <label class="form-label" for="email">Ціна</label>
                         <form:input path="price"  class="form-control" id="email" name="email" placeholder="Price" tabindex="2"  />
                     </div>
                         </li>
                         <li>
-                    <div class="form-group">
-                        <label class="form-label" for="subject">Quarantee</label>
-                        <form:input path="guarantee"  class="form-control" id="subject" name="subject" placeholder="guarantee" tabindex="3"/>
-                    </div>
+                    <%--<div class="form-group">--%>
+                        <%--<label class="form-label" for="subject">Quarantee</label>--%>
+                        <%--<form:input path="guarantee"  class="form-control" id="subject" name="subject" placeholder="guarantee" tabindex="3"/>--%>
+                    <%--</div>--%>
                         </li>
                         <li>
                     <div class="form-group">
-                    <label class="form-label" for="subject">Brand</label>
+                    <label class="form-label" for="subject">Бренд</label>
                     <select name="brand" style=" width: 100px; height:20px"  >
                         <c:forEach var="brand" items="${brands}">
                             <option value="${brand.id}">${brand.name}</option>
@@ -408,7 +476,7 @@
                         </li>
                         <li>
                     <div class="form-group">
-                        <label class="form-label" for="subject">Category</label>
+                        <label class="form-label" for="subject">Категорія</label>
                         <select name="category" style=" width: 100px; height:20px"  >
                             <c:forEach var="category" items="${categorys}">
                                 <option value="${category.id}">${category.name}</option>
@@ -418,7 +486,7 @@
                         </li>
                         <li>
                     <div class="form-group">
-                        <label class="form-label" for="subject">Manager</label>
+                        <label class="form-label" for="subject">Менеджер</label>
                         <select name="man" style=" width: 100px; height:20px"  >
                             <c:forEach var="man" items="${managers}">
                                 <option value="${man.id}">${man.name}</option>
@@ -428,7 +496,7 @@
                         </li>
                         <li>
                     <div class="form-group">
-                        <label class="form-label" for="subject">Model</label>
+                        <label class="form-label" for="subject">Модель</label>
                         <select name="model" style=" width: 100px; height:20px"  >
                             <c:forEach var="model" items="${models}">
                                 <option value="${model.id}">${model.nameOfModel}</option>
@@ -438,7 +506,7 @@
                         </li>
                         <li>
                     <div >
-                        <button type="submit" class="btn btn-start-order">Send Message</button>
+                        <button type="submit" class="btn btn-start-order">Створити</button>
                     </div>
                         </li>
                     </ol>
@@ -448,16 +516,16 @@
 
             <section class="table">
                 <!--for demo wrap-->
-                <h1>Fixed Table header</h1>
+                <h1>Таблиця</h1>
                 <div class="tbl-header">
                     <table cellpadding="0" cellspacing="0" border="0">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Model</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                            <th>Brand</th>
+                            <th>Ім'я</th>
+                            <th>Модель</th>
+                            <th>Ціна</th>
+                            <th>Категорія</th>
+                            <th>Бренд</th>
                         </tr>
                         </thead>
                     </table>
@@ -471,7 +539,7 @@
                                 <td>${product.model.nameOfModel}</td>
                                 <td>${product.price}</td>
                                 <td>${product.category.name}</td>
-                                <td>${product.brand.name}                    <a class="btnn" href="deleteProduct/${product.id}" >Delete product</a></td>
+                                <td>${product.brand.name}                    <a class="btnn" href="deleteProduct/${product.id}" >Видалити продукт</a></td>
                             </tr>
                         </c:forEach>
 
@@ -490,16 +558,16 @@
 
         <section class="table">
             <!--for demo wrap-->
-            <h1 id="qwe">Fixed Table header</h1>
+            <h1 id="qwe">Таблиця</h1>
             <div class="tbl-header">
                 <table cellpadding="0" cellspacing="0" border="0">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Model</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Brand</th>
+                        <th>Ім'я</th>
+                        <th>Модель</th>
+                        <th>Ціна</th>
+                        <th>Категорія</th>
+                        <th>Бренд</th>
                     </tr>
                     </thead>
                 </table>
@@ -513,7 +581,7 @@
                             <td>${product.model.nameOfModel}</td>
                             <td>${product.price}</td>
                             <td>${product.category.name}</td>
-                            <td>${product.brand.name}                    <a class="btnn" onclick="change(${product.id})" >Modify</a> <a class="btnn" onclick="photo(${product.id})" >Photo</a></td>
+                            <td>${product.brand.name}                    <a class="btnn" onclick="change(${product.id})" >Змінити</a> <a class="btnn" onclick="photo(${product.id})" >Фотографія</a></td>
                         </tr>
                     </c:forEach>
 
@@ -531,20 +599,20 @@
                     </c:forEach>
                 </select>
                 <select style="width: 100px; height: 25px;" id="change" name="whatChange">
-                    <option onclick="show()" value="name">name</option>
-                    <option onclick="show()" value="price">price</option>
-                    <option onclick="brand()" value="brand">brand</option>
+                    <option onclick="show()" value="name">Ім'я</option>
+                    <option onclick="show()" value="price">Ціна</option>
+                    <option onclick="brand()" value="brand">Бренд</option>
                 </select>
                 <input style="height: 40px" type="submit" value="change">
 
             </form:form>
-            </div>
+        </div>
             <div name="photo" id="" style="margin-left: 50px; display: none;">
                 <form:form action="./products/saveImageForProduct?${_csrf.parameterName}=${_csrf.token}"
                            method="post" enctype="multipart/form-data" id="photo">
                     <input type="text" name="id" value="${flower.id}" >
                     <input type="file" name="image">
-                    <button>save image</button>
+                    <button>Змінити фотографію</button>
                 </form:form>
             <%--<form:form action="" method="post" id="photo" enctype="multipart/form-data">--%>
                 <%--<input name="photo" type="file">--%>
@@ -560,21 +628,25 @@
     <div id="menu3" style="display: none">
         <%--<div class="col-md-3">--%>
         <div class="formProd" >
-            <form:form modelAttribute="brand" id="contact-form" class="form" action="addBrand" method="post" role="form">
+           <%-- <&lt;%&ndash;form:&ndash;%&gt;form &lt;%&ndash;modelAttribute="brand" id="contact-form" class="form" action="addBrand" method="post" role="form"&ndash;%&gt;>
                 <ol class="inBlock">
                     <li>
 
 
-                            <form:input  path="name" type="text" class="form-control" id="name"  placeholder="name" />
+                            <&lt;%&ndash;form:&ndash;%&gt;input &lt;%&ndash; path="name" &ndash;%&gt;type="text" class="form-control" &lt;%&ndash;id="name"&ndash;%&gt; id="brandName" placeholder="namee" />
 
                     </li>
                     <li>
 
-                            <button style="background: silver; height: 25px; width: 100px; text-align: center;" type="submit" >Send</button>
+                            <button style="background: silver; height: 25px; width: 100px; text-align: center;" &lt;%&ndash;type="submit"&ndash;%&gt; onclick="saveBrand()">Send</button>
 
                     </li>
                 </ol>
-            </form:form>
+            </form&lt;%&ndash;:form&ndash;%&gt;>--%>
+
+                <input id="brandName" <%--onkeyup="doAjax()"--%> placeholder="name">
+                <%--<input type="submit" onclick="doaAjax()" id="save">--%>
+               <input type="submit" onclick="getTypes()" id="save">
         </div>
         <%--</div>--%>
 
@@ -592,15 +664,15 @@
             </div>
             <div class="tbl-content">
                 <table cellpadding="0" cellspacing="0" border="0">
-                    <tbody>
-                    <c:forEach var="brand" items="${brands}">
-                        <tr>
-                            <td>${brand.name}</td>
-                            <td> <a class="btnn" href="deleteBrand/${brand.id}" >Delete brand</a></td>
-                            <td>  <a class="btnn" onclick="changeBrand(${brand.id})" >Modify</a></td>
+                    <tbody id="brandTable">
+                    <%--<c:forEach var="brand" items="${brands}">--%>
+                        <%--<tr>--%>
+                            <%--<td>${brand.name}</td>--%>
+                            <%--<td> <a class="btnn" href="deleteBrand/${brand.id}" >Delete brand</a></td>--%>
+                            <%--<td>  <a class="btnn" onclick="changeBrand(${brand.id})" >Modify</a></td>--%>
 
-                        </tr>
-                    </c:forEach>
+                        <%--</tr>--%>
+                    <%--</c:forEach>--%>
 
 
                     </tbody>
@@ -1060,12 +1132,6 @@
                             <td>${user.accountNonLocked}</td>
                             <td>  <a class="btnn" href="ban/${user.id}" >ban</a></td>
                             <td>  <a class="btnn" href="unban/${user.id}">unban</a></td>
-                            <%--<td> <a class="btnn" href="deleteUser/${user.id}" >Delete brand</a></td>--%>
-                            <%--<td>  <a class="btnn" onclick="" >Ban</a></td>--%>
-                            <%--<td>  <a class="btnn" onclick="" >UnBan</a></td>--%>
-                            <%--<td>  <a class="btnn" onclick="" >Set Admin</a></td>--%>
-                            <%--<td>  <a class="btnn" onclick="" >Set User</a></td>--%>
-
                         </tr>
                     </c:forEach>
 
@@ -1086,7 +1152,10 @@
 
 </main>
 <input  type="hidden" value="${whatToDo}" id="do">
-<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+<input type="hidden" name="csrf_name"
+       value="${_csrf.parameterName}" />
+<input type="hidden" name="csrf_value"
+       value="${_csrf.token}" />
 
 </body>
 <script type="text/javascript" src="js/adminpanel.js"></script>

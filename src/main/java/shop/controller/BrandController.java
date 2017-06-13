@@ -5,17 +5,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import shop.dto.BrandDTO;
+import shop.dto.DTOUtilMapper;
 import shop.entity.Brand;
 import shop.service.BrandService;
 
+import java.util.List;
+
 @Controller
-public class BrandController {
+public class  BrandController {
 	
 	@Autowired 
 	private BrandService brandService;
@@ -29,13 +29,24 @@ public class BrandController {
 	}
 	
 	@RequestMapping(value="/addBrand",method = RequestMethod.POST)
-	public String addBrand(@ModelAttribute("brand") Brand brand,HttpSession session){
+    @ResponseBody
+	public String addBrand(@RequestBody Brand brand/*, HttpSession session*/){
 
-		session.setAttribute("do","brand");
+//		session.setAttribute("do","brand");
 		brandService.save(brand);
 		
 		return "redirect:/adminpanel";
 	}
+
+    @RequestMapping(value = "/saveCountry", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Brand> saveCountry(@RequestBody Brand brand) {
+
+//        brandService.save(country);
+        System.out.println("qwe");
+        return brandService.findAll();
+
+    }
 	
 	@RequestMapping(value="/deleteBrand/{id}",method = RequestMethod.GET)
 	public String deleteBrand(HttpSession session,@PathVariable String id){
@@ -45,6 +56,13 @@ public class BrandController {
 		
 		
 		return "redirect:/adminpanel";
+	}
+
+	@RequestMapping(value="/delete",method = RequestMethod.GET)
+	public @ResponseBody String delete(@RequestBody String id){
+		Brand brand = brandService.findOne(Integer.parseInt(id));
+		brandService.delete(brand);
+		return "OK";
 	}
 	
 	
@@ -58,6 +76,26 @@ public class BrandController {
 		
 		return "redirect:/adminpanel";
 	}
+
+//    @RequestMapping(value="/show",method = RequestMethod.POST)
+//    @ResponseBody
+//    public String show(String id){
+//
+////		session.setAttribute("do","brand");
+////        brandService.save(brand);
+//        System.out.println("DADLMA{SJD{OJASD");
+//
+//        return id;
+//    }
+
+    @RequestMapping(value = "/deleteCountry", method = RequestMethod.POST)
+    public String loadCountries(@RequestBody String index) {
+
+        brandService.delete(Integer.parseInt(index));
+
+        return "OK";
+
+    }
 	
 
 }

@@ -47,7 +47,7 @@ public class User implements UserDetails {
 	
 	@OneToMany(mappedBy="user")
 	private List<Sale> sales;
-	
+
 	@OneToMany(mappedBy="user")
 	private List<Cart> carts;
 	
@@ -148,7 +148,7 @@ public class User implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 
 	public List<Cart> getCarts() {
 		return carts;

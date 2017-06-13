@@ -19,110 +19,7 @@ $(document).ready(function() {
     // alert(location.href);
 //        alert(a);
 })
-// function menu(e) {
-//     if(e == 'createProduct'){
-//         $('#menu').css('display','block');
-//         $('#menu3').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu4').css('display','none');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'modifyProduct'){
-//         $('#menu').css('display','none');
-//         $('#menu3').css('display','none');
-//         $('#menu2').css('display','block');
-//         $('#menu4').css('display','none');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'createBrand'){
-//         $('#menu').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu4').css('display','none');
-//         $('#menu3').css('display','block');
-//         $('#menu4').css('display','none');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'createModel'){
-//         $('#menu').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu3').css('display','none');
-//         $('#menu4').css('display','block');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'createManager'){
-//         $('#menu').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu3').css('display','none');
-//         $('#menu4').css('display','block');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'createCategory'){
-//         $('#menu').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu3').css('display','none');
-//         $('#menu4').css('display','none');
-//         $('#menu5').css('display','block');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'createSubcategory'){
-//         $('#menu').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu3').css('display','none');
-//         $('#menu4').css('display','none');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','block');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'createDelivery'){
-//         $('#menu').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu3').css('display','none');
-//         $('#menu4').css('display','none');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','block');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'Sale'){
-//         $('#menu').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu3').css('display','none');
-//         $('#menu4').css('display','none');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','block');
-//         $('#menu9').css('display','none');
-//     }else if(e == 'User'){
-//         $('#menu').css('display','none');
-//         $('#menu2').css('display','none');
-//         $('#menu3').css('display','none');
-//         $('#menu4').css('display','none');
-//         $('#menu5').css('display','none');
-//         $('#menu6').css('display','none');
-//         $('#menu7').css('display','none');
-//         $('#menu8').css('display','none');
-//         $('#menu9').css('display','block');
-//     }
-// }
+
     function menuHelp(id){
     $('#menu1').css('display','none');
     $('#menu3').css('display','none');
@@ -232,53 +129,9 @@ function photo(id) {
 
 function typeOfSortt(sort) {
       var val = $('#page').val();
-    // $.ajax({
-    //     url: '/products/'+val,
-    //     // type:"POST",
-    //     async  : false,
-    //
-    //     cache  : false,
-    //     data:({typeOfSort : sort}),
-    //     method: "GET",
-    //     success : function () {
-    //
-    //
-    //     // location.reload();
-    //
-    //     }
-    //
-    // })
     window.location.href ="http://localhost:8080/products/Phone/"+sort;
 }
 
-function nextPage() {
-    $.ajax({
-        url: 'nextPage',
-        data:({begin : $('#begin').attr('value'), end :  $('#end').attr('value') , page :  $('#page').attr('value') }),
-        method: "GET",
-        success : function () {
-
-
-            location.reload();
-
-        }
-
-    })
-}
-function prevPage() {
-    $.ajax({
-        url: 'prevPage',
-        data:({begin : $('#begin').attr('value'), end :  $('#end').attr('value') , page :  $('#page').attr('value') }),
-        method: "GET",
-        success : function () {
-
-
-            location.reload();
-
-        }
-
-    })
-}
 
 function sort(sort) {
     $.ajax({
@@ -291,4 +144,45 @@ function sort(sort) {
         }
 
     })
+}
+
+function getTypes() {
+    $.ajax({
+        url: '/load',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (types) {
+            var all = '';
+
+            for (var i = 0; i < types.length; i++) {
+                var index = types[i].id;
+                all += '<tr><td>' + types[i].name + '</td><td><a class="btnn" onclick="deleteCountry('+types[i].id+ ') " >Delete brand</a></td><td>  <a class="btnn" onclick="changeBrand('+types[i].id+')" >Modify</a></td></tr>';
+            }
+            $('#brandTable').html(all);
+            // alert(all);
+        },
+        error:function () {
+            alert("ERROR");
+        }
+    })
+}
+
+function deleteCountry(index) {
+
+    $.ajax({
+
+        url: 'deleteCountry?' + $('input[name=csrf_name]').val() + "=" + $('input[name=csrf_value]').val(),
+        method: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
+        data: '' + index,
+        success: function () {
+            getTypes();
+        },
+        error:function () {
+            getTypes();
+        }
+    })
+
+
 }

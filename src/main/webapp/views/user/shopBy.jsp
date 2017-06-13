@@ -186,7 +186,7 @@
                     </div> <!-- /.flat-top-bar-shop -->
                     <main  id="twelve" class="post-wrap">
                         <ul class="products-grid flat-reset"><%--/////////////////////////////////////////////////////////////////////////--%>
-                            <c:forEach var="product" items="${products}">
+                            <c:forEach var="product" items="${products.content}">
 
                                 <li class="item col-md-4 wide-first">
                                     <div class="item-inner">
@@ -211,7 +211,7 @@
                                         <div class="item-info">
                                             <div class="info-inner">
                                                 <div class="item-title">
-                                                    <a href="product_detail.html">${product.name} ${product.model.nameOfModel}</a>
+                                                    <a href="/productdetails/${product.id}">${product.name} ${product.model.nameOfModel}</a>
                                                 </div> <!-- /.item-title -->
 
                                                 <div class="item-content">
@@ -239,60 +239,80 @@
                         </ul>
                     </main> <!-- /.post-wrap -->
 
-                    <main style="display: none" id="six" class="post-wrap">
-                        <ul class="products-grid flat-reset"><%--/////////////////////////////////////////////////////////////////////////--%>
-                            <c:forEach var="product" items="${products}">
+                    <%--<main style="display: none" id="six" class="post-wrap">--%>
+                        <%--<ul class="products-grid flat-reset">&lt;%&ndash;/////////////////////////////////////////////////////////////////////////&ndash;%&gt;--%>
+                            <%--<c:forEach var="product" items="${products}">--%>
 
-                                <li class="item col-md-4 wide-first">
-                                    <div class="item-inner">
-                                        <div class="item-img">
-                                            <div class="item-img-info">
-                                                <div class="pimg">
-                                                    <a href="product_detail.html" class="product-image">
-                                                        <img style="height: 247px; width: 252px" src="${product.image}" class="attachment-shop_catalog" alt="Images">
-                                                    </a>
-                                                </div> <!-- /.pimg -->
+                                <%--<li class="item col-md-4 wide-first">--%>
+                                    <%--<div class="item-inner">--%>
+                                        <%--<div class="item-img">--%>
+                                            <%--<div class="item-img-info">--%>
+                                                <%--<div class="pimg">--%>
+                                                    <%--<a href="product_detail.html" class="product-image">--%>
+                                                        <%--<img style="height: 247px; width: 252px" src="${product.image}" class="attachment-shop_catalog" alt="Images">--%>
+                                                    <%--</a>--%>
+                                                <%--</div> <!-- /.pimg -->--%>
 
-                                                <div class="box-hover">
-                                                    <ul class="add-to-links">
-                                                        <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
-                                                        <li><a class="add_to_cart_button" href="#" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
-                                                    </ul>
-                                                </div> <!-- /.box-hover -->
-                                            </div> <!-- /.item-img-info -->
-                                        </div> <!-- /.item-img -->
+                                                <%--<div class="box-hover">--%>
+                                                    <%--<ul class="add-to-links">--%>
+                                                        <%--<li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>--%>
+                                                        <%--<li><a class="add_to_cart_button" href="#" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>--%>
+                                                        <%--<li><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>--%>
+                                                    <%--</ul>--%>
+                                                <%--</div> <!-- /.box-hover -->--%>
+                                            <%--</div> <!-- /.item-img-info -->--%>
+                                        <%--</div> <!-- /.item-img -->--%>
 
-                                        <div class="item-info">
-                                            <div class="info-inner">
-                                                <div class="item-title">
-                                                    <a href="product_detail.html">${product.name} ${product.model.nameOfModel}</a>
-                                                </div> <!-- /.item-title -->
+                                        <%--<div class="item-info">--%>
+                                            <%--<div class="info-inner">--%>
+                                                <%--<div class="item-title">--%>
+                                                    <%--<a href="/productdetails/${product.id}">${product.name} ${product.model.nameOfModel}</a>--%>
+                                                <%--</div> <!-- /.item-title -->--%>
 
-                                                <div class="item-content">
-                                                    <div class="item-price">
-                                                        <div class="price-box">
-                                                            <ins><span class="amount">$${product.price}</span></ins>
-                                                        </div>
-                                                    </div> <!-- /.item-price -->
+                                                <%--<div class="item-content">--%>
+                                                    <%--<div class="item-price">--%>
+                                                        <%--<div class="price-box">--%>
+                                                            <%--<ins><span class="amount">$${product.price}</span></ins>--%>
+                                                        <%--</div>--%>
+                                                    <%--</div> <!-- /.item-price -->--%>
 
-                                                    <div class="rating">
-                                                        <div class="ratings">
-                                                            <div class="rating-box">
-                                                                <div style="width:60%" class="rating"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div> <!-- /.rating -->
-                                                </div> <!-- /.item-content -->
-                                            </div> <!-- /.info-inner -->
-                                        </div> <!-- /.item-info -->
-                                    </div> <!-- /.item-inner -->
-                                </li>
+                                                    <%--<div class="rating">--%>
+                                                        <%--<div class="ratings">--%>
+                                                            <%--<div class="rating-box">--%>
+                                                                <%--<div style="width:60%" class="rating"></div>--%>
+                                                            <%--</div>--%>
+                                                        <%--</div>--%>
+                                                    <%--</div> <!-- /.rating -->--%>
+                                                <%--</div> <!-- /.item-content -->--%>
+                                            <%--</div> <!-- /.info-inner -->--%>
+                                        <%--</div> <!-- /.item-info -->--%>
+                                    <%--</div> <!-- /.item-inner -->--%>
+                                <%--</li>--%>
 
-                            </c:forEach>
+                            <%--</c:forEach>--%>
 
-                        </ul>
-                    </main>
+                        <%--</ul>--%>
+                    <%--</main>--%>
+                    <c:set var="currentPage" value="${products.number}"/>
+                    <c:set var="totalPages" value="${totalPages-1}"/>
+
+
+                    <c:if test="${currentPage != 0}">
+                        <a href="/products/typepageable/${products.number-1}/6/${sort}/${type}">previous</a>
+                    </c:if>
+
+
+                    <c:forTokens var="page" items="${pages}" delims="-"><%--0-1-2-3-4-5-6--%>
+
+                        <a href="/products/typepageable/${page}/10/${sort}/${type}">${page}</a>
+
+                    </c:forTokens>
+
+
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="/products/typepageable/${products.number+1}/6/${sort}/${type}">next</a>
+                    </c:if>
+
 
 
                     <div class="flat-top-bar-shop flat-bottom-bar-shop flat-reset">
@@ -308,12 +328,10 @@
                                     <li>
                                         <span>Position</span>
                                         <ul>
-                                            <li>Position</li>
-                                            <li>Sort by popularity</li>
-                                            <li>Sort by average rating</li>
-                                            <li>Sort by newness</li>
-                                            <li>Sort by price: low to high</li>
-                                            <li>Sort by price: high to low</li>
+                                            <li><a href="/products/typepageable/0/6/price/${type}">Price</a></li>
+                                            <li><a href="/products/typepageable/0/6/name/${type}">Name</a></li>
+                                            <li><a href="/products/typepageable/0/6/id/${type}">Default</a></li>
+                                            <li><a href="/products/typepageable/0/6/sortDesc/${type}">priceDesc</a></li>
 
                                         </ul>
                                     </li>
@@ -448,4 +466,4 @@
 </div>
 <input type="hidden" id="begin" value="${begin}">
 <input type="hidden" id="end" value="${end}">
-<input  name="page" id="page" value="${page}">
+<input type="hidden" name="type" id="type" value="${type}">

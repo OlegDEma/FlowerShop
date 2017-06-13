@@ -5,15 +5,54 @@
 <script type="text/javascript" src="http://localhost:8080/adminpanel.js"></script>
 <script type="text/javascript">
 
+    function doAjax(e){
+        $.ajax({
+            url:'/addInCart/'+e,
+            data:({password : $('#password').val()}),
+            success:function(data){
+                location.reload();
+//                $('.toggle1').toggle();
+//              $('#toggle2').toggle();
+//
+////                $('.toggle2').delay(5000);
+////                $('#toggle2').toggle();
+////                $('.toggle1').toggle();
+//                setTimeout(function(){
+//                    $('#toggle2').toggle();
+//                    $('.toggle1').toggle();
+//                },500);
+
+            }
+        });
+    }
+
+
 </script>
+<%--<div>--%>
+    <%--<svg class="progress-icon" width="250" height="250" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">--%>
+    <%--<defs>--%>
+        <%--<path id="tick-outline-path" d="M14 28c7.732 0 14-6.268 14-14S21.732 0 14 0 0 6.268 0 14s6.268 14 14 14z" opacity="0" />--%>
+        <%--<path id="tick-path" d="M6.173 16.252l5.722 4.228 9.22-12.69" opacity="0"/>--%>
+    <%--</defs>--%>
+    <%--<g class="tick-icon" stroke-width="2" stroke="rgba(0,0,0,.2)" fill="none" transform="translate(1, 1)">--%>
+        <%--<use class="tick-outline" xlink:href="#tick-outline-path" />--%>
+        <%--<use class="tick" xlink:href="#tick-path" />--%>
+    <%--</g>--%>
+    <%--<g class="tick-icon" stroke-width="2" stroke="#fff" fill="none" transform="translate(1, 1.2)">--%>
+        <%--<use class="tick-outline" xlink:href="#tick-outline-path" />--%>
+        <%--<use class="tick" xlink:href="#tick-path" />--%>
+    <%--</g>--%>
+<%--</svg>--%>
+<%--</div>--%>
+
 <div class="flat-page-title flat-reset">
     <div class="container">
         <div class="row">
             <div class="col-md-12 title-contain">
-                <h2>LIVING ROOM</h2>
+                <h2>Flower</h2>
                 <ul class="breadcrumbs">
-                    <li><a class="home" href="#">Home</a></li>
-                    <li><a href="#">Living Room</a></li>
+                    <li><a class="home" href="/home">Home</a></li>
+                    <li><a href="#">Fialka</a></li>
                 </ul>
             </div>
         </div>
@@ -26,18 +65,18 @@
             <div class="col-md-12">
                 <div id="secondary" class="widget-area">
                     <div class="sidebar_shop_sidebar">
-                        <h2 class="widget-title woocommerce-title">SHOP BY</h2>
+                        <h2 class="widget-title woocommerce-title">Вибрати за:</h2>
 
                         <aside class="widget woocommerce widget_product_categories">
-                            <h3 class="widget-title">BY CATEGORIES</h3>
+                            <h3 class="widget-title">Категорії</h3>
                             <ul class="product-categories">
-                                <li class="cat-item"><a href="/products/Phone">Phone</a></li>
-                                <li class="cat-item"><a href="/products/Mikrovolnovka">Mikrovolnovka</a></li>
-                                <li class="cat-item"><a href="#">Tables and Chair Sets</a></li>
-                                <li class="cat-item"><a href="#">Learning Stations</a></li>
-                                <li class="cat-item"><a href="#">Reading Corner</a></li>
-                                <li class="cat-item"><a href="#">Sofas and Lounges</a></li>
-                                <li class="cat-item"><a href="#">Wall Decorations</a></li>
+                                <li class="cat-item"><a href="/products/Невеликі квіти">Невеликі квіти</a></li>
+                                <li class="cat-item"><a href="/products/Mikrovolnovka">Великі квіти</a></li>
+                                <li class="cat-item"><a href="#">Рози</a></li>
+                                <li class="cat-item"><a href="#">Фіалки</a></li>
+                                <li class="cat-item"><a href="#">Екзотика</a></li>
+                                <li class="cat-item"><a href="#">Альстромерії</a></li>
+                                <li class="cat-item"><a href="#">Гербери</a></li>
                             </ul>
                         </aside> <!-- /.widget_product_categories -->
 
@@ -56,15 +95,15 @@
                         </aside> <!-- /.widget_price_filter -->
 
                         <aside class="widget woocommerce widget_manufaturer">
-                            <h3 class="widget-title">BY MANUFACTURER</h3>
+                            <h3 class="widget-title">Інше:</h3>
                             <ul class="product-manufaturer">
-                                <li><a href="#">Masterkidz Education</a></li>
-                                <li><a href="#">COKO</a></li>
-                                <li><a href="#">Colorations</a></li>
-                                <li><a href="#">Educational Colours </a></li>
-                                <li><a href="#">Edx Education</a></li>
-                                <li><a href="#">Freckled Frog</a></li>
-                                <li><a href="#">George Luck</a></li>
+                                <li class="cat-item"><a href="/products/Mikrovolnovka">Сезонні квіти</a></li>
+                                <li class="cat-item"><a href="#">Букети квітів</a></li>
+                                <li class="cat-item"><a href="#">Квіти в коробці</a></li>
+                                <li><a href="#">Подарунки</a></li>
+                                <li><a href="#">Квіткові кошики</a></li>
+                                <li><a href="#">Квіткові композиції</a></li>
+                                <li><a href="#">Кімнатні рослини</a></li>
                             </ul>
                         </aside> <!-- /.widget_manufaturer -->
 
@@ -98,40 +137,19 @@
 
                         <aside class="widget woocommerce widget_top_rated_products">
                             <ul class="product_list_widget">
-                                <li>
-                                    <a href="#" title="LOREM IPSUM DOLOR SIT AMET">
-                                        <img width="100" height="100" src="img/page/products/1.jpg" class="attachment-shop_thumbnail" alt="LOREM IPSUM DOLOR SIT AMET"><div class="product-info"> <span class="product-title">LOREM IPSUM DOLOR SIT AMET</span>
-                                        <ins><span class="amount">$256.00</span></ins>
-                                        <div class="star-rating" title="Rated 5 out of 5">
+                                <c:forEach items="${products.content}" var="product" begin="1" end="3" >
+                                    <li>
+                                        <a href="#" title="${product.name}">
+                                            <img style="height: 80px; width: 100px" src="http://localhost:8080/${product.image}" class="attachment-shop_thumbnail" alt="${product.name}"><div class="product-info"> <span class="product-title">${product.name} ${product.model.nameOfModel}</span>
+                                            <ins><span class="amount">${product.price}</span></ins>
+                                            <div class="star-rating" title="Rated 5 out of 5">
                                                 <span style="width:60%">
                                                     <strong class="rating">5</strong> out of 5
                                                 </span>
-                                        </div></div></a>
-                                </li>
+                                            </div></div></a>
+                                    </li>
+                                </c:forEach>
 
-                                <li>
-                                    <a href="#" title="LOREM IPSUM DOLOR SIT AMET">
-                                        <img width="100" height="100" src="img/page/products/2.jpg" class="attachment-shop_thumbnail" alt="LOREM IPSUM DOLOR SIT AMET"> <div class="product-info"> <span class="product-title">LOREM IPSUM DOLOR SIT AMET</span>
-
-                                        <ins><span class="amount">$256.00</span></ins>
-                                        <div class="star-rating" title="Rated 5 out of 5">
-                                                <span style="width:60%">
-                                                    <strong class="rating">5</strong> out of 5
-                                                </span>
-                                        </div></div></a>
-                                </li>
-
-                                <li>
-                                    <a href="#" title="LOREM IPSUM DOLOR SIT AMET">
-                                        <img width="100" height="100" src="img/page/products/3.jpg" class="attachment-shop_thumbnail" alt="LOREM IPSUM DOLOR SIT AMET"><div class="product-info">  <span class="product-title">LOREM IPSUM DOLOR SIT AMET</span>
-
-                                        <ins><span class="amount">$256.00</span></ins>
-                                        <div class="star-rating" title="Rated 5 out of 5">
-                                                <span style="width:60%">
-                                                    <strong class="rating">5</strong> out of 5
-                                                </span>
-                                        </div></div></a>
-                                </li>
                             </ul> <!-- /.product_list_widget -->
                         </aside> <!-- /.widget_top_rated_products -->
                     </div> <!-- /.sidebar_shop_sidebar -->
@@ -147,26 +165,26 @@
 
                 <div id="primary" class="content-area ">
                     <div class="flat-top-bar-shop flat-reset">
-                        <div class="flat-left list-or-grid">
-                            <a class="grid-view active" href="#" title="Switch to grid view"><i class="fa fa-th-large"></i>Grid</a>
-                            <a class="list-view" href="#" title="Switch to list view"><i class="fa fa-align-justify"></i>List</a>
-                        </div> <!-- /.list-or-grid -->
+                        <%--<div class="flat-left list-or-grid">--%>
+                            <%--<a class="grid-view active" href="#" title="Switch to grid view"><i class="fa fa-th-large"></i>Grid</a>--%>
+                            <%--<a class="list-view" href="#" title="Switch to list view"><i class="fa fa-align-justify"></i>List</a>--%>
+                        <%--</div> <!-- /.list-or-grid -->--%>
 
                         <div class="flat-right flat-filter">
 
                             <div class="flat-showpost">
-                                Sort
-                                <div class="form-group">
-                                    <%--<select style="height: 32px; width: 109px" name="color" id="size" class="form-control">--%>
-                                        <%--<option value=""> </option>--%>
-                                        <%--<option &lt;%&ndash;onclick="typeOfSortt('desc')"&ndash;%&gt; name="typeOfSort" value="desc"><a href="/products/${page}">priceqDow</a></option>--%>
-                                        <%--<option onclick="typeOfSortt('esc')" value="priceUp">priceUp</option>--%>
-                                        <%--<option onclick="typeOfSortt('name')" value="Name">Name</option>--%>
-                                    <%--</select>--%>
-                                        <a href="">desc</a>
-                                        <a href="">esc</a>
-                                        <a href="">name</a>
-                                </div>
+                                <%--Sort--%>
+                                <%--<div class="form-group">--%>
+                                    <%--&lt;%&ndash;<select style="height: 32px; width: 109px" name="color" id="size" class="form-control">&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<option value=""> </option>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<option &lt;%&ndash;onclick="typeOfSortt('desc')"&ndash;%&gt; name="typeOfSort" value="desc"><a href="/products/${page}">priceqDow</a></option>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<option onclick="typeOfSortt('esc')" value="priceUp">priceUp</option>&ndash;%&gt;--%>
+                                        <%--&lt;%&ndash;<option onclick="typeOfSortt('name')" value="Name">Name</option>&ndash;%&gt;--%>
+                                    <%--&lt;%&ndash;</select>&ndash;%&gt;--%>
+                                        <%--<a href="">desc</a>--%>
+                                        <%--<a href="">esc</a>--%>
+                                        <%--<a href="">name</a>--%>
+                                <%--</div>--%>
                                 <%--<ul class="flat-blog-select">--%>
                                     <%--<li>--%>
                                         <%--<span>12</span>--%>
@@ -183,7 +201,7 @@
                     </div> <!-- /.flat-top-bar-shop -->
                     <main  id="twelve" class="post-wrap">
                         <ul class="products-grid flat-reset"><%--/////////////////////////////////////////////////////////////////////////--%>
-                            <c:forEach var="product" items="${products}">
+                            <c:forEach var="product" items="${products.content}">
 
                                 <li class="item col-md-4 wide-first">
                                     <div class="item-inner">
@@ -196,11 +214,18 @@
                                                 </div> <!-- /.pimg -->
 
                                                 <div class="box-hover">
-                                                    <ul class="add-to-links">
-                                                        <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
-                                                        <li><a class="add_to_cart_button" href="#" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>
-                                                        <li><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
-                                                    </ul>
+                                                <ul class="add-to-links">
+                                                    <li class="toggle1"><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
+                                                    <li class="toggle1"><a class="add_to_cart_button" <%--href="/addInCart/${product.id}"--%> onclick="doAjax(${product.id})" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>
+                                                    <li style="display: none" id="toggle2"><img src="http://www.freeiconspng.com/uploads/accept-tick-icon-12.png"></li>
+                                                    <li class="toggle1"><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
+                                                </ul>
+                                            </div> <!-- /.box-hover -->
+
+                                                <div class="box-hover2">
+                                                    <a href="#" class="check">
+                                                        <span class="tick"></span>
+                                                    </a>
                                                 </div> <!-- /.box-hover -->
                                             </div> <!-- /.item-img-info -->
                                         </div> <!-- /.item-img -->
@@ -208,7 +233,7 @@
                                         <div class="item-info">
                                             <div class="info-inner">
                                                 <div class="item-title">
-                                                    <a href="product_detail.html">${product.name} ${product.model.nameOfModel}</a>
+                                                    <a href="/productdetails/${product.id}">${product.name} ${product.model.nameOfModel}</a>
                                                 </div> <!-- /.item-title -->
 
                                                 <div class="item-content">
@@ -236,6 +261,28 @@
                         </ul>
                     </main> <!-- /.post-wrap -->
 
+                    <div style="margin-left: 380px">
+                    <c:set var="currentPage" value="${products.number}"/>
+                    <c:set var="totalPages" value="${totalPages-1}"/>
+
+
+                    <c:if test="${currentPage != 0}">
+                        <a href="/products/pageable/${products.number-1}/6/${sort}">previous</a>
+                    </c:if>
+
+
+                    <c:forTokens var="page" items="${pages}" delims="-"><%--0-1-2-3-4-5-6--%>
+
+                        <a href="/products/pageable/${page}/6/${sort}">${page}</a>
+
+                    </c:forTokens>
+
+
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="/products/pageable/${products.number+1}/6/${sort}">next</a>
+                    </c:if>
+                    </div>
+
 
 
                     <div class="flat-top-bar-shop flat-bottom-bar-shop flat-reset">
@@ -251,12 +298,10 @@
                                     <li>
                                         <span>Position</span>
                                         <ul>
-                                            <li>Position</li>
-                                            <li>Sort by popularity</li>
-                                            <li>Sort by average rating</li>
-                                            <li>Sort by newness</li>
-                                            <li>Sort by price: low to high</li>
-                                            <li>Sort by price: high to low</li>
+                                            <li><a href="/products/pageable/0/6/price">Ціна ></a></li>
+                                            <li><a href="/products/pageable/0/6/name">Ім'я</a></li>
+                                            <li><a href="/products/pageable/0/6/id">Стандарт</a></li>
+                                            <li><a href="/products/pageable/0/6/sortDesc">Ціна <</a></li>
 
                                         </ul>
                                     </li>
@@ -389,6 +434,10 @@
     <i class="fa fa-chevron-up"></i>
 </a>
 </div>
+<a href="#" class="check">
+    <span class="tick"></span>
+    <span class="cross"></span>
+</a>
 <input type="hidden" id="begin" value="${begin}">
 <input type="hidden" id="end" value="${end}">
 <input type="hidden" id="page" value="${page}">

@@ -9,15 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import shop.dto.BrandDTO;
+import shop.dto.DTOUtilMapper;
 import shop.entity.*;
 import shop.service.BrandService;
 import shop.service.CartService;
@@ -68,26 +67,38 @@ public class HomeController {
 	private CartService cartService;
 
 
+
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String home(Model model,Principal principal){
 		model.addAttribute("user",new User());
-		if(principal ==  null){
+		model.addAttribute("products", productService.findAll());
+		
+		if(principal ==  null || principal.getName().equals("admin")){
 
         }else{
-            System.out.println(principal);
+            model.addAttribute("many",productService.getCartInfoProduct(principal));
+            model.addAttribute("price",userService.findOne(Integer.parseInt(principal.getName())).getCarts().get(0).getTotal());
         }
 
 		return "views-user-home";
 	}
 
 	@RequestMapping(value = { "/cart" }, method = RequestMethod.GET)
-	public String cart( ){
+	public String cart(Model model , Principal principal){
+		model.addAttribute("user",userService.findOne(Integer.parseInt(principal.getName())));
 
-		return "views-base-cart";
+		if(principal ==  null || principal.getName().equals("admin")){
+
+		}else{
+			model.addAttribute("many",productService.getCartInfoProduct(principal));
+			model.addAttribute("price",userService.findOne(Integer.parseInt(principal.getName())).getCarts().get(0).getTotal());
+		}
+		return "views-user-cart";
 	}
 
 	@RequestMapping(value = { "/adminpanel" }, method = RequestMethod.GET)
 	public String adminpanel(HttpSession session, Model model){
+
         model.addAttribute("product",new Product());
         model.addAttribute("products", productService.findAll());
         model.addAttribute("brands", brandService.findAll());
@@ -146,6 +157,8 @@ public class HomeController {
 
 	@RequestMapping(value = "/ad", method = RequestMethod.GET)
 	public String ad() {
+		String price = "price";
+		Sort sort = new Sort(price);
 		return "views-base-ad";
 
 	}
@@ -549,13 +562,22 @@ public class HomeController {
 	}
 
 	@RequestMapping(value="/addInCart/{id}",method = RequestMethod.GET)
-	public String addInCart(@PathVariable("id") String id,@RequestParam("cartId") String cartID){
-		Cart cart = cartService.findOne(Integer.parseInt(cartID));
+	public String addInCart(@PathVariable("id") String id,/*@RequestParam("cartId") String cartID*/ Principal principal){
+//		Cart cart = cartService.findOne(Integer.parseInt(cartID));
+//		Cart cart = cartService.findOne(50);
+//		Cart cart = userService.findOne(Integer.parseInt(principal.getName())).getCarts().get(0);
+		List<Cart> list = userService.findOne(Integer.parseInt(principal.getName())).getCarts();
+		Cart cart = null;
+		for (Cart cart1:list) {
+			if(cart1.getName().equals("default")){
+				cart = cart1;
+			}
+		}
 		Product product = productService.findOne(Integer.parseInt(id));
 		cart.setTotal(cart.getTotal()+product.getPrice());
 		cart.getProduct().add(product);
 		cartService.update(cart);
-		return "redirect:/adminpanel";
+		return "redirect:/";
 	}
 
 
@@ -567,34 +589,71 @@ public class HomeController {
 		return "redirect:/adminpanel";
 	}
 
-	@RequestMapping(value="/deleteProdInCart/{id}/{name}",method = RequestMethod.GET)
-	public String deleteProdInCart(@PathVariable("id") String id,@PathVariable("name") String name,Principal principal){
+//	@RequestMapping(value="/deleteProdInCart/{id}/{name}",method = RequestMethod.GET)
+//	public String deleteProdInCart(@PathVariable("id") String id,@PathVariable("name") String name,Principal principal){
+//
+//		User user = userService.findOne(Integer.parseInt(principal.getName()));
+//		List<Cart> carts = user.getCarts();
+//		Product product = productService.findOne(Integer.parseInt(id));
+//		int index = 0;
+//		for (Cart cart : carts) {
+//			if(cart.getName().equals(name)){
+//				List<Product> products = cart.getProduct();
+//				Iterator<Product> iterator = products.iterator();
+//				while (iterator.hasNext()) {
+//					Product product2 = (Product) iterator.next();
+//					if(product2.getId() == Integer.parseInt(id)){
+//						cart.setTotal(cart.getTotal() - product2.getPrice());
+//						iterator.remove();
+//						cartService.update(cart);
+//
+//					}
+//					break;
+//				}
+//
+//			}
+//		}
+////		System.out.println(carts.get(0).getProduct());
+//
+//		userService.update(user);
+//		return "redirect:/adminpanel";
+//	}
 
+	@RequestMapping(value="/deleteProdInCart/{id}",method = RequestMethod.GET)
+	public String deleteProdInCart(@PathVariable("id") String id,Principal principal){
 		User user = userService.findOne(Integer.parseInt(principal.getName()));
-		List<Cart> carts = user.getCarts();
-		Product product = productService.findOne(Integer.parseInt(id));
-		int index = 0;
-		for (Cart cart : carts) {
-			if(cart.getName().equals(name)){
-				List<Product> products = cart.getProduct();
-				Iterator<Product> iterator = products.iterator();
-				while (iterator.hasNext()) {
-					Product product2 = (Product) iterator.next();
-					if(product2.getId() == Integer.parseInt(id)){
-						cart.setTotal(cart.getTotal() - product2.getPrice());
-						iterator.remove();
-						cartService.update(cart);
-
-					}
-					break;
-				}
-
+		List<Cart> list = user.getCarts();
+		Cart cart = null;
+		for (Cart cart1:list) {
+			if(cart1.getName().equals("default")){
+				cart = cart1;
 			}
 		}
+		List<Product> products = cart.getProduct();
+		Iterator<Product> iterator = products.iterator();
+		while (iterator.hasNext()){
+			Product product =  iterator.next();
+			if (product.getId() == Integer.parseInt(id)){
+				iterator.remove();
+			}
+		}
+
+		cartService.update(cart);
+		userService.update(user);
+
+//		System.out.println(cart);
+
 //		System.out.println(carts.get(0).getProduct());
 
-		userService.update(user);
-		return "redirect:/adminpanel";
+
+		return "redirect:/cart";
+	}
+
+	@RequestMapping("/productdetails/{id}")
+	public String productdetails(@PathVariable("id") String id , Model model) {
+		model.addAttribute("product", productService.findOne(Integer.parseInt(id)));
+		model.addAttribute("products",productService.findAll());
+		return "views-user-productdetails";
 	}
 
 	@RequestMapping("/loginpage")
@@ -647,7 +706,67 @@ public class HomeController {
         return "views-base-new";
     }
 
+	@RequestMapping(value = "/checkName", method = RequestMethod.GET)
+	public @ResponseBody String checkname(Brand brand) {
+			if(brand != null){
+				return "yes";
+			}else{
+				return "no";
+			}
+		}
+
+	@RequestMapping(value="/qwe",method = RequestMethod.POST)
+	public @ResponseBody String qwe(String id){
+
+//		session.setAttribute("do","brand");
+//        brandService.save(brand);
+		System.out.println("DADLMA{SJD{OJASD");
+
+		return id;
+	}
+	@RequestMapping(value = "/saveCountry", method = RequestMethod.POST)
+    @ResponseBody
+	public String saveCountry(@RequestBody Brand brand) {
+
+//		brandService.save(brand);
+
+		return "yes";
+
+	}
+
+    @RequestMapping(value = "/rest", method = RequestMethod.POST, consumes = "application/json")
+    public @ResponseBody String rest(@RequestBody Brand brand){
+        brandService.save(brand);
+        return "OK";
+    }
+
+	@RequestMapping(value = "/load", method = RequestMethod.GET)
+	@ResponseBody
+	public List<BrandDTO> reload(){
+		return DTOUtilMapper.brandsToBrandsDTO(brandService.findAll());
+	}
+
+	@RequestMapping(value = "/cartInfo", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> reload(Principal principal){
+		List<String> list = new ArrayList<String>();
+		if(principal ==  null || principal.getName().equals("admin")){
+			list.add("0");
+			list.add("0");
+			list.add("Admin");
+			return list;
+		}else {
+			list.add(productService.getCartInfoProduct(principal));
+			list.add(String.valueOf(userService.findOne(Integer.parseInt(principal.getName())).getCarts().get(0).getTotal()));
+			list.add(userService.findOne(Integer.parseInt(principal.getName())).getName());
+			return list;
+			}
+	}
+
+
+
+}
 
 	
 
-}
+

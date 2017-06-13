@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import shop.dao.CartDao;
 import shop.entity.Cart;
+import shop.entity.Product;
 import shop.service.CartService;
 
 @Service("cartService")
@@ -24,7 +25,19 @@ public class CartServiceImpl implements CartService {
 		return cartDao.findOne(id);
 	}
 
-	public void save(Cart cart) {
+	public void save(Cart cart){
+		List<Product> products = cart.getProduct();
+
+		double total = 0;
+
+		for (Product product:products) {
+
+			total+= product.getPrice();
+
+		}
+
+		cart.setTotal(total);
+
 		cartDao.save(cart);
 	}
 
@@ -43,8 +56,22 @@ public class CartServiceImpl implements CartService {
 	}
 
 	public void update(Cart cart) {
+
+		List<Product> products = cart.getProduct();
+
+		double total = 0;
+
+		for (Product product:products) {
+
+			total+= product.getPrice();
+
+		}
+
+		cart.setTotal(total);
+
 		cartDao.save(cart);
 		
 	}
 
 }
+
