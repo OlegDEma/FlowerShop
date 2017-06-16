@@ -646,7 +646,7 @@ function loadBrand() {
 
                 <input id="brandName" <%--onkeyup="doAjax()"--%> placeholder="name">
                 <%--<input type="submit" onclick="doaAjax()" id="save">--%>
-               <input type="submit" onclick="getTypes()" id="save">
+               <input type="submit" onclick="doaAjax()" id="save">
         </div>
         <%--</div>--%>
 

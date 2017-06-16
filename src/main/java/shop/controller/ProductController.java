@@ -122,36 +122,6 @@ public class ProductController {
         return "views-user-shopBy";
     }
 
-//    @RequestMapping(value="/{sort}/{typeOfSort}",method = RequestMethod.GET)
-//    public String type(HttpSession session ,Model model,@PathVariable("sort") String sort,@PathVariable("typeOfSort") String typeOfSort){
-//
-//        System.out.println(sort);
-//        System.out.println(typeOfSort);
-//        if (typeOfSort == null){
-//            System.out.println("null");
-////
-////            List<Product> products = productService.sort(sort);
-////
-////            model.addAttribute("products", products);
-////            model.addAttribute("page",sort);
-//        }else {
-//            System.out.println("not null");
-////            model.addAttribute("products",productService.findAll());
-//            if (typeOfSort.equals("desc")){
-////                for (Product product: productService.findAllByPriceDESC(sort)) {
-////                    System.out.println(product);
-////                }
-//                model.addAttribute("products",productService.findAllByPriceDESC(sort));
-//            }else if(typeOfSort.equals("esc")){
-//                model.addAttribute("products",productService.findAllByPriceESC(sort));
-//            }else if(typeOfSort.equals("name")){
-//                model.addAttribute("products",productService.findAllByName(sort));
-//            }
-//        }
-//        model.addAttribute("page",sort);
-//
-//        return "views-user-shopBy";
-//    }
 
 
 //

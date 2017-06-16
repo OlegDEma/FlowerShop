@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import shop.dto.BrandDTO;
 import shop.dto.DTOUtilMapper;
+import shop.dto.ProductDTO;
 import shop.entity.*;
 import shop.service.BrandService;
 import shop.service.CartService;
@@ -269,177 +270,6 @@ public class HomeController {
 	}
 
 
-	//Product
-//
-//
-//	@RequestMapping(value="/products",method = RequestMethod.GET)
-//	public String addProduct(HttpSession session ,Model model , String sort){
-////			model.addAttribute("begin","1");
-////			model.addAttribute("end","6");
-//		System.out.println(sort);
-//		if (sort == null){
-//			model.addAttribute("products", productService.findAll());
-//		}else {
-//			List<Product> products = productService.sort(sort);
-//			model.addAttribute("products", products);
-//		}
-////		model.addAttribute("products", productService.findAll());
-////		System.out.println(session.getAttribute("begin"));
-////		session.invalidate();
-//		if (session.getAttribute("begin") == null){
-//			model.addAttribute("begin","1");
-//			model.addAttribute("end","12");
-//		}else {
-////			System.out.println(session.getAttribute("begin"));
-////			System.out.println(session.getAttribute("end"));
-//			String begin = (String) session.getAttribute("begin");
-//			String end = (String) session.getAttribute("end");
-//			model.addAttribute("begin",begin);
-//			model.addAttribute("end",end);
-////			session.invalidate();
-//		}
-//		return "views-user-products";
-//	}
-//
-//	@RequestMapping(value="/sort/{sort}",method = RequestMethod.GET)
-//	public String sort(HttpSession session ,Model model,@PathVariable("sort") String sort){
-//
-//
-//			List<Product> products = productService.sort(sort);
-//		for (Product product: products) {
-//			System.out.println(product.getCategory().getName());
-//		}
-//			model.addAttribute("products", products);
-//
-//		if (session.getAttribute("begin") == null){
-//			model.addAttribute("begin","1");
-//			model.addAttribute("end","12");
-//		}else {
-////			System.out.println(session.getAttribute("begin"));
-////			System.out.println(session.getAttribute("end"));
-//			String begin = (String) session.getAttribute("begin");
-//			String end = (String) session.getAttribute("end");
-//			model.addAttribute("begin",begin);
-//			model.addAttribute("end",end);
-////			session.invalidate();
-//		}
-//		return "views-user-products";
-//	}
-//
-//	@RequestMapping(value="/page",method = RequestMethod.GET)
-//	public String page(HttpSession session, String id){
-//		session.setAttribute("begin","7");
-//		session.setAttribute("end","12");
-//		return "redirect:/products";
-//	}
-//
-//	@RequestMapping(value="/nextPage",method = RequestMethod.GET)
-//	public String nextPage(HttpSession session, String begin , String end){
-//
-//		List<Product> products = productService.findAll();
-//		int size = products.size();
-//		int beginInt = Integer.parseInt(begin);
-//		int endInt = Integer.parseInt(end);
-//		if(endInt > size){
-//			session.setAttribute("begin",String.valueOf(beginInt));
-//			session.setAttribute("end", String.valueOf(endInt));
-//		}else {
-//			int newBegin = endInt+1;
-//			int newEnd = newBegin+12-1;
-//			session.setAttribute("begin",String.valueOf(newBegin));
-//			session.setAttribute("end", String.valueOf(newEnd));
-//		}
-//
-//
-//
-////		session.setAttribute("begin",String.valueOf(newBegin));
-////		session.setAttribute("end", String.valueOf(newEnd));
-////		System.out.println(newBegin);
-////		System.out.println(newEnd);
-////		System.out.println("qwe");
-////		System.out.println(newBegin);
-////		System.out.println(newEnd);
-//		return "redirect:/products";
-//	}
-//	@RequestMapping(value="/prevPage",method = RequestMethod.GET)
-//	public String prevPage(HttpSession session, String begin , String end){
-//
-//		int beginInt = Integer.parseInt(begin);
-//		int endInt = Integer.parseInt(end);
-//
-//		 endInt = beginInt-1;
-//		 beginInt = endInt-12+1;
-//		 if (beginInt < 1){
-//			 session.setAttribute("begin","1");
-//			 session.setAttribute("end","12");
-//		 }else {
-//			 session.setAttribute("begin",String.valueOf(beginInt));
-//			 session.setAttribute("end", String.valueOf(endInt));
-//		 }
-//
-//
-//		System.out.println(beginInt);
-//		System.out.println(endInt);
-////		System.out.println("qwe");
-////		System.out.println(newBegin);
-////		System.out.println(newEnd);
-//		return "redirect:/products";
-//	}
-//
-//	@RequestMapping(value="/addNewProduct",method = RequestMethod.GET)
-//	public String addNewProduct(@ModelAttribute("product")Product product,@RequestParam("brand") String brand , @RequestParam("category") String category,
-//			@RequestParam("man") String man,@RequestParam("model") String model){
-////		product.setBrand(brand);
-////		System.out.println(brand);
-////		System.out.println(brandService.findOne(Integer.parseInt(brand)));
-//		product.setCategory(categoryService.findOne(Integer.parseInt(category)));
-//		product.setBrand(brandService.findOne(Integer.parseInt(brand)));
-//		product.setManager(managerService.findOne(Integer.parseInt(man)));
-////		System.out.println(manager);
-//		product.setModel(modelService.findOne(Integer.parseInt(model)));
-////        System.out.println(product);
-//        productService.save(product);
-////		System.out.println(br);
-//		return "redirect:/adminpanel";
-//	}
-//
-//	@RequestMapping(value="/deleteProduct/{id}",method = RequestMethod.GET)
-//	public String deleteProduct(@PathVariable("id") String id){
-//		productService.delete(Integer.parseInt(id));
-//		return "redirect:/adminpanel";
-//	}
-//
-//	@RequestMapping(value="/changeProduct/{id}",method = RequestMethod.GET)
-//	public String changeProduct(HttpSession session, @PathVariable("id") String id, @RequestParam("value") String value, @RequestParam("whatChange") String whatChange, @RequestParam("brand") String brand){
-//		Product product = productService.findOne(Integer.parseInt(id));
-//		if(whatChange.equals("name")){
-//			product.setName(value);
-//			productService.update(product);
-//		}else if(whatChange.equals("price")){
-//			product.setPrice(Double.parseDouble(value));
-//			productService.update(product);
-//		}else if(whatChange.equals("brand")){
-//			product.setBrand(brandService.findOne(Integer.parseInt(brand)));
-//			productService.update(product);
-//
-//		}
-//		session.setAttribute("do","change");
-//
-//
-//
-//
-//		return "redirect:/adminpanel";
-//	}
-//
-//
-//    @RequestMapping(value = "/saveImageForProduct", method = RequestMethod.POST)
-//    public String saveImageForProduct(Principal principal ,@RequestParam("id") String id ,@RequestParam MultipartFile image) {
-//
-//        productService.saveImageForProduct(id,image);
-//
-//
-//		return "redirect:/adminpanel";
-//    }
 
 
 	//ProductDesc
@@ -563,9 +393,6 @@ public class HomeController {
 
 	@RequestMapping(value="/addInCart/{id}",method = RequestMethod.GET)
 	public String addInCart(@PathVariable("id") String id,/*@RequestParam("cartId") String cartID*/ Principal principal){
-//		Cart cart = cartService.findOne(Integer.parseInt(cartID));
-//		Cart cart = cartService.findOne(50);
-//		Cart cart = userService.findOne(Integer.parseInt(principal.getName())).getCarts().get(0);
 		List<Cart> list = userService.findOne(Integer.parseInt(principal.getName())).getCarts();
 		Cart cart = null;
 		for (Cart cart1:list) {
@@ -577,8 +404,9 @@ public class HomeController {
 		cart.setTotal(cart.getTotal()+product.getPrice());
 		cart.getProduct().add(product);
 		cartService.update(cart);
-		return "redirect:/";
+		return "OK";
 	}
+
 
 
 	@RequestMapping(value="/deleteCart/{id}",method = RequestMethod.GET)
@@ -589,65 +417,6 @@ public class HomeController {
 		return "redirect:/adminpanel";
 	}
 
-//	@RequestMapping(value="/deleteProdInCart/{id}/{name}",method = RequestMethod.GET)
-//	public String deleteProdInCart(@PathVariable("id") String id,@PathVariable("name") String name,Principal principal){
-//
-//		User user = userService.findOne(Integer.parseInt(principal.getName()));
-//		List<Cart> carts = user.getCarts();
-//		Product product = productService.findOne(Integer.parseInt(id));
-//		int index = 0;
-//		for (Cart cart : carts) {
-//			if(cart.getName().equals(name)){
-//				List<Product> products = cart.getProduct();
-//				Iterator<Product> iterator = products.iterator();
-//				while (iterator.hasNext()) {
-//					Product product2 = (Product) iterator.next();
-//					if(product2.getId() == Integer.parseInt(id)){
-//						cart.setTotal(cart.getTotal() - product2.getPrice());
-//						iterator.remove();
-//						cartService.update(cart);
-//
-//					}
-//					break;
-//				}
-//
-//			}
-//		}
-////		System.out.println(carts.get(0).getProduct());
-//
-//		userService.update(user);
-//		return "redirect:/adminpanel";
-//	}
-
-	@RequestMapping(value="/deleteProdInCart/{id}",method = RequestMethod.GET)
-	public String deleteProdInCart(@PathVariable("id") String id,Principal principal){
-		User user = userService.findOne(Integer.parseInt(principal.getName()));
-		List<Cart> list = user.getCarts();
-		Cart cart = null;
-		for (Cart cart1:list) {
-			if(cart1.getName().equals("default")){
-				cart = cart1;
-			}
-		}
-		List<Product> products = cart.getProduct();
-		Iterator<Product> iterator = products.iterator();
-		while (iterator.hasNext()){
-			Product product =  iterator.next();
-			if (product.getId() == Integer.parseInt(id)){
-				iterator.remove();
-			}
-		}
-
-		cartService.update(cart);
-		userService.update(user);
-
-//		System.out.println(cart);
-
-//		System.out.println(carts.get(0).getProduct());
-
-
-		return "redirect:/cart";
-	}
 
 	@RequestMapping("/productdetails/{id}")
 	public String productdetails(@PathVariable("id") String id , Model model) {
@@ -761,6 +530,23 @@ public class HomeController {
 			list.add(userService.findOne(Integer.parseInt(principal.getName())).getName());
 			return list;
 			}
+	}
+
+	@RequestMapping(value = "/searchRes", method = RequestMethod.GET)
+    @ResponseBody
+	public List<ProductDTO> searchRes() {
+
+        return DTOUtilMapper.productsToProductsDTO(productService.findAll());
+
+	}
+
+	@RequestMapping(value = "/loadCart", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ProductDTO> loadCart(Principal principal){
+		User user = userService.findOne(Integer.parseInt(principal.getName()));
+		List<Product> products = user.getCarts().get(0).getProduct();
+
+		return DTOUtilMapper.productsToProductsDTO(products);
 	}
 
 

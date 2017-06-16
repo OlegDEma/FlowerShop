@@ -186,3 +186,92 @@ function deleteCountry(index) {
 
 
 }
+
+function doAjax(e){
+    $.ajax({
+        url:'/addInCart/'+e,
+        data:({password : $('#password').val()}),
+        success:function(data){
+            cartInfo();
+        },
+        error:function () {
+            cartInfo();
+        }
+    });
+}
+
+function searchText( string, needle ) {
+    return !!(string.search( needle ) + 1);
+}
+
+$(document).ready(function () {
+
+
+
+//Живой поиск
+    $('#search').bind("keyup", function() {
+
+            var search = $('#search').val();
+            // alert(search);
+            // var search = this.value();
+        $.ajax({
+            url: '/searchRes',
+            type: 'GET',
+            contentType: 'application/json',
+            data: ''+search,
+            success: function (types) {
+                // alert("EZ");
+                if(search === ""){
+                    $(".search_result").fadeOut();
+                }else{
+                var all = '';
+                for (var i = 0; i < types.length; i++) {
+                    var name = types[i].name;
+                    var index = types[i].id;
+                   if(searchText(name,search)){
+                       all += '\n<li><a href="/productdetails/'+index+'">'+name+'</li>';
+                   }
+
+                }
+                $('.search_result').html(all).fadeIn();
+                }
+            },
+            error:function (types) {
+                alert("ERROR");
+            }
+        })
+
+    });
+
+    $(".search_result").hover(function(){
+        $(".who").blur(); //Убираем фокус с input
+    })
+
+//При выборе результата поиска, прячем список и заносим выбранный результат в input
+    $(".search_result").on("click", "li", function(){
+        s_user = $(this).text();
+        //$(".who").val(s_user).attr('disabled', 'disabled'); //деактивируем input, если нужно
+        $(".search_result").fadeOut();
+    })
+
+})
+
+function cartInfo() {
+    $.ajax({
+        url: '/cartInfo',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (types) {
+            var many = types[0] + " товарів -";
+            var price ="$" + types[1];
+            var name = types[2];
+            $('#many').html(many);
+            $('#price').html(price);
+            $('#userName').html(name);
+        },
+        error:function () {
+            alert("ERROR");
+        }
+    })
+}
+

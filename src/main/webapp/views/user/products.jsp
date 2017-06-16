@@ -5,25 +5,23 @@
 <script type="text/javascript" src="http://localhost:8080/adminpanel.js"></script>
 <script type="text/javascript">
 
-    function doAjax(e){
+    function cartInfo() {
         $.ajax({
-            url:'/addInCart/'+e,
-            data:({password : $('#password').val()}),
-            success:function(data){
-                location.reload();
-//                $('.toggle1').toggle();
-//              $('#toggle2').toggle();
-//
-////                $('.toggle2').delay(5000);
-////                $('#toggle2').toggle();
-////                $('.toggle1').toggle();
-//                setTimeout(function(){
-//                    $('#toggle2').toggle();
-//                    $('.toggle1').toggle();
-//                },500);
-
+            url: '/cartInfo',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (types) {
+                var many = types[0] + " товарів -";
+                var price ="$" + types[1];
+                var name = types[2];
+                $('#many').html(many);
+                $('#price').html(price);
+                $('#userName').html(name);
+            },
+            error:function () {
+                alert("ERROR");
             }
-        });
+        })
     }
 
 

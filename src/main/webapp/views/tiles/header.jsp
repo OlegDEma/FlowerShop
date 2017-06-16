@@ -4,26 +4,27 @@
            prefix="sec"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/adminpanel.js"></script>
 <script type="text/javascript">
     function logout() {
         $('#log').click();
-//        alert("qwe");
     }
     $(document).ready(function () {
         cartInfo();
     })
+
     function cartInfo() {
         $.ajax({
             url: '/cartInfo',
             type: 'GET',
             contentType: 'application/json',
             success: function (types) {
-              var many = types[0] + " товарів -";
-              var price ="$" + types[1];
-              var name = types[2];
-              $('#many').html(many);
-              $('#price').html(price);
-              $('#userName').html(name);
+                var many = types[0] + " товарів -";
+                var price ="$" + types[1];
+                var name = types[2];
+                $('#many').html(many);
+                $('#price').html(price);
+                $('#userName').html(name);
             },
             error:function () {
                 alert("ERROR");
@@ -141,7 +142,8 @@
                                 <form role="search" method="get" class="search-form" action="#">
                                     <label>
                                         <span class="screen-reader-text">Пошук за:</span>
-                                        <input type="search" class="search-field" placeholder="Шукайте за назвою або категорією" value="" name="s">
+                                        <input type="search" id="search" class="search-field" placeholder="Шукайте за назвою або категорією" value="" name="s" autocomplete="off">
+                                        <ul class="search_result"></ul>
                                     </label>
                                     <input type="submit" class="search-submit" value="Пошук">
                                 </form>
@@ -221,3 +223,7 @@
         </div> <!-- /.flat-header-bottom -->
     </header>
 </div>
+<input type="hidden" name="csrf_name"
+       value="${_csrf.parameterName}" />
+<input type="hidden" name="csrf_value"
+       value="${_csrf.token}" />
