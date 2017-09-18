@@ -51,17 +51,6 @@ public class Cart {
 		this.product = product;
 	}
 
-
-	public String getNameOfCart() {
-		return name;
-	}
-
-
-	public void setNameOfCart(String name) {
-		this.name = name;
-	}
-
-
 	public int getId() {
 		return id;
 	}

@@ -47,12 +47,9 @@ public class  BrandController {
 	
 	@RequestMapping(value="/addBrand",method = RequestMethod.POST)
     @ResponseBody
-	public String addBrand(@RequestBody Brand brand/*, HttpSession session*/){
-
-//		session.setAttribute("do","brand");
+	public String addBrand(@RequestBody Brand brand){
 		brandService.save(brand);
-		
-		return "redirect:/adminpanel";
+		return "OK";
 	}
 
     @RequestMapping(value = "/saveCountry", method = RequestMethod.GET)
@@ -64,24 +61,7 @@ public class  BrandController {
         return brandService.findAll();
 
     }
-	
-	@RequestMapping(value="/deleteBrand/{id}",method = RequestMethod.GET)
-	public String deleteBrand(HttpSession session,@PathVariable String id){
-		Brand brand = brandService.findOne(Integer.parseInt(id));
-		brandService.delete(brand);
-		session.setAttribute("do","brand");
-		
-		
-		return "redirect:/adminpanel";
-	}
 
-	@RequestMapping(value="/delete",method = RequestMethod.GET)
-	public @ResponseBody String delete(@RequestBody String id){
-		Brand brand = brandService.findOne(Integer.parseInt(id));
-		brandService.delete(brand);
-		return "OK";
-	}
-	
 	
 	@RequestMapping(value="/changeNewBrand/{id}",method = RequestMethod.GET)
 	public String changeNewBrand(HttpSession session ,@PathVariable("id") String id,@RequestParam("name") String name){
@@ -94,18 +74,7 @@ public class  BrandController {
 		return "redirect:/adminpanel";
 	}
 
-//    @RequestMapping(value="/show",method = RequestMethod.POST)
-//    @ResponseBody
-//    public String show(String id){
-//
-////		session.setAttribute("do","brand");
-////        brandService.save(brand);
-//        System.out.println("DADLMA{SJD{OJASD");
-//
-//        return id;
-//    }
-
-    @RequestMapping(value = "/deleteCountry", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteBrand", method = RequestMethod.POST)
     public String loadCountries(@RequestBody String index) {
 
         brandService.delete(Integer.parseInt(index));
@@ -116,8 +85,6 @@ public class  BrandController {
 
     @RequestMapping(value = "/addProd", method = RequestMethod.POST)
     public String addProd(@RequestBody String index, Principal principal) {
-
-        System.out.println("EEEEEEEEEEZZZZZZZZZZZZZZ");
 
         List<Cart> list = userService.findOne(Integer.parseInt(principal.getName())).getCarts();
         Cart cart = null;

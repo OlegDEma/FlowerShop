@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
            prefix="sec"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="js/adminpanel.js"></script>
 <script type="text/javascript">
     function logout() {
@@ -48,7 +48,7 @@
                     <div class="flat-top-right flat-right">
                         <ul>
                             <%--<li><a href=""><i class="fa fa-user"></i>My Account</a></li>--%>
-                            <li><a href=""><i class="fa fa-heart"></i>Мої вподобання</a></li>
+                            <li><a href="/pdf"><i class="fa fa-heart"></i>Мої вподобання</a></li>
 
                             <sec:authorize access="!isAuthenticated()">
                                 <li><a href=""><i class="fa fa-check-square-o"></i>Реєстрація</a></li>
@@ -56,7 +56,7 @@
                             </sec:authorize>
                             <sec:authorize access="isAuthenticated()">
                                 <div style="display:none">
-                                    <form:form type="hidden" action="logout" method="post">
+                                    <form:form type="hidden" action="/logout" method="post">
                                         <button type="hidden" id="log">Вихід</button>
                                     </form:form>
                                 </div>
@@ -149,11 +149,13 @@
                                 </form>
                             </aside> <!-- /.widget_search -->
 
+                            <sec:authorize access="hasRole('ROLE_USER')">
+
 
                             <aside class="widget widget_shopping">
                                 <a href="/cart">
                                     <img src="http://localhost:8080/img/header/shop.png" alt="Delivery">
-                                    <span class="title">Корзина</span></br>
+                                    <span class="title">Кошик</span></br>
                                     <sec:authorize access="isAuthenticated()">
                                         <span id="many"></span><span class="blue" title="prices" id="price"></span>
                                     </sec:authorize>
@@ -165,6 +167,7 @@
 
 
                             </aside> <!-- /.widget_shopping -->
+                            </sec:authorize>
                         </div> <!-- /.flat-widgets -->
                     </div>
                 </div>
@@ -188,8 +191,8 @@
 
                                             <%--</ul><!-- /.submenu -->--%>
                                         </li>
-                                        <li><a href="about.html">Про нас</a></li>
-                                        <li><a href="services.html">Сервіс</a></li>
+                                        <li><a href="/about">Про нас</a></li>
+                                        <li><a href="/services">Сервіс</a></li>
                                         <li><a href="/products/">Товари</a>
 
                                         </li>
@@ -197,12 +200,12 @@
 
                                         </li>
                                         <sec:authorize access="!hasRole('ROLE_ADMIN')">
-                                        <li><a href="contact.html">Зворотній зв'язок</a></li>
+                                        <li><a href="/portfolio">Зворотній зв'язок</a></li>
                                     </sec:authorize>
                                         <sec:authorize access="hasRole('ROLE_ADMIN')">
                                             <li><a href="adminpanel">Адмін панель</a></li>
                                         </sec:authorize>
-                                        <li <%--class="parent"--%>><a href="blog.html">Відгуки</a>
+                                        <li <%--class="parent"--%>><a href="/portfolio">Відгуки</a>
 
                                         </li>
                                     </ul><!-- /.menu -->

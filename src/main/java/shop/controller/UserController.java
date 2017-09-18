@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import shop.entity.Cart;
 import shop.entity.Role;
 import shop.entity.User;
+import shop.service.CartService;
 import shop.service.UserService;
 
 @Controller
@@ -19,6 +21,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private CartService cartService;
 	
     
 
@@ -29,16 +34,21 @@ public class UserController {
 
 	        user.setUuid(uuid);
 	        user.setRole(Role.ROLE_USER);
-
-	       
 	            userService.save(user);
-	       
-
 	        String theme = "thank's for registration";
 	        String mailBody =
 	                "gl & hf       http://localhost:8080/confirm/" + uuid;
 
 	        userService.sendMail(theme, mailBody, user.getMail());
+
+	        User user1 = userService.findByUuid(uuid);
+
+         Cart cart = new Cart();
+
+         cart.setName("default");
+         cart.setUser(user1);
+
+         cartService.save(cart);
 
 	        return "redirect:/";
 	    }

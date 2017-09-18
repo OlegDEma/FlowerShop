@@ -1,22 +1,28 @@
 package shop.controller;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import shop.dto.BrandDTO;
 import shop.dto.DTOUtilMapper;
+import shop.dto.ModelDTO;
 import shop.dto.ProductDTO;
 import shop.entity.*;
 import shop.service.BrandService;
@@ -30,6 +36,8 @@ import shop.service.ProductService;
 import shop.service.SaleService;
 import shop.service.SubcategoryService;
 import shop.service.UserService;
+
+import static shop.controller.Main.createSamplePDF;
 
 @Controller
 public class HomeController {
@@ -71,30 +79,43 @@ public class HomeController {
 
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String home(Model model,Principal principal){
-		model.addAttribute("user",new User());
 		model.addAttribute("products", productService.findAll());
-		
-		if(principal ==  null || principal.getName().equals("admin")){
-
-        }else{
-            model.addAttribute("many",productService.getCartInfoProduct(principal));
-            model.addAttribute("price",userService.findOne(Integer.parseInt(principal.getName())).getCarts().get(0).getTotal());
-        }
 
 		return "views-user-home";
 	}
 
+
+
+
+
 	@RequestMapping(value = { "/cart" }, method = RequestMethod.GET)
 	public String cart(Model model , Principal principal){
 		model.addAttribute("user",userService.findOne(Integer.parseInt(principal.getName())));
-
-		if(principal ==  null || principal.getName().equals("admin")){
-
-		}else{
-			model.addAttribute("many",productService.getCartInfoProduct(principal));
-			model.addAttribute("price",userService.findOne(Integer.parseInt(principal.getName())).getCarts().get(0).getTotal());
-		}
 		return "views-user-cart";
+	}
+
+	@RequestMapping(value = { "/about" }, method = RequestMethod.GET)
+	public String cart(){
+
+		return "views-user-about";
+	}
+
+	@RequestMapping(value = { "/services" }, method = RequestMethod.GET)
+	public String services(){
+
+		return "views-user-services";
+	}
+
+	@RequestMapping(value = { "/contact" }, method = RequestMethod.GET)
+	public String contact(){
+
+		return "views-user-contact";
+	}
+
+	@RequestMapping(value = { "/portfolio" }, method = RequestMethod.GET)
+	public String portfolio(){
+
+		return "views-admin-404";
 	}
 
 	@RequestMapping(value = { "/adminpanel" }, method = RequestMethod.GET)
@@ -141,7 +162,7 @@ public class HomeController {
 				session.invalidate();
 			}
 		}catch (Exception e){
-
+			System.out.println(e.getStackTrace());
 		}
 
 
@@ -243,12 +264,7 @@ public class HomeController {
 		return "views-base-model";
 	}
 
-	@RequestMapping(value="/addNewModel",method = RequestMethod.GET)
-	public String addNewModel(HttpSession session ,@ModelAttribute("model") shop.entity.Model model ){
-		modelService.save(model);
-		session.setAttribute("do","model");
-		return "redirect:/adminpanel";
-	}
+
 
 	@RequestMapping(value="/deleteModel/{id}",method = RequestMethod.GET)
 	public String deleteModel(HttpSession session ,@PathVariable("id") String id){
@@ -437,28 +453,6 @@ public class HomeController {
 
 		return "redirect:/";
 	}
-
-	@RequestMapping(value = "/enable", method = RequestMethod.GET)
-	public String enable() {
-		User user = userService.findByName("Oleg");
-		user.setEnabled(true);
-		userService.update(user);
-
-		return "redirect:/";
-	}
-
-	@RequestMapping(value = "/ez", method = RequestMethod.GET)
-	public String ez(Principal principal,HttpServletRequest request) {
-
-		String ipAddress = userService.getClientIpAddr(request);
-
-		System.out.println(ipAddress);
-		System.out.println(principal);
-        System.out.println("rak");
-
-
-        return "redirect:/";
-	}
 	
 	@RequestMapping(value = "/reg", method = RequestMethod.GET)
 	public String reg(Model model) {
@@ -484,15 +478,7 @@ public class HomeController {
 			}
 		}
 
-	@RequestMapping(value="/qwe",method = RequestMethod.POST)
-	public @ResponseBody String qwe(String id){
 
-//		session.setAttribute("do","brand");
-//        brandService.save(brand);
-		System.out.println("DADLMA{SJD{OJASD");
-
-		return id;
-	}
 	@RequestMapping(value = "/saveCountry", method = RequestMethod.POST)
     @ResponseBody
 	public String saveCountry(@RequestBody Brand brand) {
@@ -509,11 +495,42 @@ public class HomeController {
         return "OK";
     }
 
+	@RequestMapping(value = "/addNewModel", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody String addNewModel(@RequestBody shop.entity.Model model){
+		modelService.save(model);
+		return "OK";
+	}
+
+    @RequestMapping(value = "/loadModel", method = RequestMethod.GET)
+    @ResponseBody
+    public List<ModelDTO> loadModel(){
+        return DTOUtilMapper.modelsTomodelsDTO(modelService.findAll());
+    }
+
+    @RequestMapping(value = "/deleteModel", method = RequestMethod.POST)
+    public String deleteModel(@RequestBody String index) {
+
+
+        modelService.delete(Integer.parseInt(index));
+
+        return "OK";
+
+    }
+
 	@RequestMapping(value = "/load", method = RequestMethod.GET)
 	@ResponseBody
 	public List<BrandDTO> reload(){
 		return DTOUtilMapper.brandsToBrandsDTO(brandService.findAll());
 	}
+
+
+
+	@RequestMapping(value = "/loadProduct", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ProductDTO> loadProduct(){
+		return DTOUtilMapper.productsToProductsDTO(productService.findAll());
+	}
+
 
 	@RequestMapping(value = "/cartInfo", method = RequestMethod.GET)
 	@ResponseBody
@@ -547,6 +564,15 @@ public class HomeController {
 		List<Product> products = user.getCarts().get(0).getProduct();
 
 		return DTOUtilMapper.productsToProductsDTO(products);
+	}
+
+	@RequestMapping(value = "/deleteProduct", method = RequestMethod.POST)
+	public String deleteProduct(@RequestBody String index) {
+
+
+		productService.delete(Integer.parseInt(index));
+
+		return "OK";
 	}
 
 

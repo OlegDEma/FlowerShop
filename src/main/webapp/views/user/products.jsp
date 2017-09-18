@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://localhost:8080/adminpanel.js"></script>
 <script type="text/javascript">
@@ -69,12 +70,12 @@
                             <h3 class="widget-title">Категорії</h3>
                             <ul class="product-categories">
                                 <li class="cat-item"><a href="/products/Невеликі квіти">Невеликі квіти</a></li>
-                                <li class="cat-item"><a href="/products/Mikrovolnovka">Великі квіти</a></li>
-                                <li class="cat-item"><a href="#">Рози</a></li>
-                                <li class="cat-item"><a href="#">Фіалки</a></li>
-                                <li class="cat-item"><a href="#">Екзотика</a></li>
-                                <li class="cat-item"><a href="#">Альстромерії</a></li>
-                                <li class="cat-item"><a href="#">Гербери</a></li>
+                                <li class="cat-item"><a href="/products/Великі квіти">Великі квіти</a></li>
+                                <li class="cat-item"><a href="/products/Невеликі квіти">Рози</a></li>
+                                <li class="cat-item"><a href="/products/Невеликі квіти">Фіалки</a></li>
+                                <li class="cat-item"><a href="/products/Невеликі квіти">Екзотика</a></li>
+                                <li class="cat-item"><a href="/products/Невеликі квіти">Альстромерії</a></li>
+                                <li class="cat-item"><a href="/products/Невеликі квіти">Гербери</a></li>
                             </ul>
                         </aside> <!-- /.widget_product_categories -->
 
@@ -96,12 +97,12 @@
                             <h3 class="widget-title">Інше:</h3>
                             <ul class="product-manufaturer">
                                 <li class="cat-item"><a href="/products/Mikrovolnovka">Сезонні квіти</a></li>
-                                <li class="cat-item"><a href="#">Букети квітів</a></li>
-                                <li class="cat-item"><a href="#">Квіти в коробці</a></li>
-                                <li><a href="#">Подарунки</a></li>
-                                <li><a href="#">Квіткові кошики</a></li>
-                                <li><a href="#">Квіткові композиції</a></li>
-                                <li><a href="#">Кімнатні рослини</a></li>
+                                <li class="cat-item"><a href="/products/Невеликі квіти">Букети квітів</a></li>
+                                <li class="cat-item"><a href="/products/Невеликі квіти">Квіти в коробці</a></li>
+                                <li><a href="/products/Невеликі квіти">Подарунки</a></li>
+                                <li><a href="/products/Невеликі квіти">Квіткові кошики</a></li>
+                                <li><a href="/products/Невеликі квіти">Квіткові композиції</a></li>
+                                <li><a hhref="/products/Невеликі квіти">Кімнатні рослини</a></li>
                             </ul>
                         </aside> <!-- /.widget_manufaturer -->
 
@@ -200,7 +201,7 @@
                     <main  id="twelve" class="post-wrap">
                         <ul class="products-grid flat-reset"><%--/////////////////////////////////////////////////////////////////////////--%>
                             <c:forEach var="product" items="${products.content}">
-
+                            <div class="item_box">
                                 <li class="item col-md-4 wide-first">
                                     <div class="item-inner">
                                         <div class="item-img">
@@ -213,9 +214,10 @@
 
                                                 <div class="box-hover">
                                                 <ul class="add-to-links">
+                                                    <sec:authorize access="hasRole('ROLE_USER')">
                                                     <li class="toggle1"><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
                                                     <li class="toggle1"><a class="add_to_cart_button" <%--href="/addInCart/${product.id}"--%> onclick="doAjax(${product.id})" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>
-                                                    <li style="display: none" id="toggle2"><img src="http://www.freeiconspng.com/uploads/accept-tick-icon-12.png"></li>
+                                                    </sec:authorize>
                                                     <li class="toggle1"><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
                                                 </ul>
                                             </div> <!-- /.box-hover -->
@@ -231,13 +233,13 @@
                                         <div class="item-info">
                                             <div class="info-inner">
                                                 <div class="item-title">
-                                                    <a href="/productdetails/${product.id}">${product.name} ${product.model.nameOfModel}</a>
+                                                    <a href="/productdetails/${product.id}" class="item_title">${product.name} ${product.model.nameOfModel}</a>
                                                 </div> <!-- /.item-title -->
 
                                                 <div class="item-content">
                                                     <div class="item-price">
                                                         <div class="price-box">
-                                                            <ins><span class="amount">$${product.price}</span></ins>
+                                                            <ins><span class="amount">$<span class="item_price">${product.price}</span></span></ins>
                                                         </div>
                                                     </div> <!-- /.item-price -->
 
@@ -253,7 +255,8 @@
                                         </div> <!-- /.item-info -->
                                     </div> <!-- /.item-inner -->
                                 </li>
-
+                                <button style="display: none" class="add_item" data-id="${product.id}" data-image="http://localhost:8080/${product.image}" >Добавить в корзину</button>
+                            </div>
                             </c:forEach>
 
                         </ul>
@@ -284,11 +287,6 @@
 
 
                     <div class="flat-top-bar-shop flat-bottom-bar-shop flat-reset">
-                        <div class="flat-left list-or-grid">
-                            <a class="grid-view active" href="#" title="Switch to grid view"><i class="fa fa-th-large"></i>Grid</a>
-                            <a class="list-view" href="#" title="Switch to list view"><i class="fa fa-align-justify"></i>List</a>
-                        </div> <!-- /.list-or-grid -->
-
                         <div class="flat-right flat-filter">
                             <div class="flat-sortby">
                                 Sort By
@@ -296,30 +294,15 @@
                                     <li>
                                         <span>Position</span>
                                         <ul>
-                                            <li><a href="/products/pageable/0/6/price">Ціна ></a></li>
+                                            <li><a href="/products/pageable/0/6/price">Ціна ↑</a></li>
                                             <li><a href="/products/pageable/0/6/name">Ім'я</a></li>
                                             <li><a href="/products/pageable/0/6/id">Стандарт</a></li>
-                                            <li><a href="/products/pageable/0/6/sortDesc">Ціна <</a></li>
+                                            <li><a href="/products/pageable/0/6/sortDesc">Ціна ↓</a></li>
 
                                         </ul>
                                     </li>
                                 </ul> <!-- /.flat-blog-select-->
                             </div> <!-- /.flat-sortby -->
-
-                            <div class="flat-showpost">
-                                Show
-                                <ul class="flat-blog-select">
-                                    <li>
-                                        <span>12</span>
-                                        <ul>
-                                            <li>12</li>
-                                            <li>6</li>
-                                            <li>20</li>
-                                        </ul>
-                                    </li>
-                                </ul> <!-- /.flat-blog-select-->
-                                per page
-                            </div><!-- /.flat-viewing -->
                         </div> <!-- /.flat-filter -->
                     </div> <!-- /.flat-bottom-bar-shop -->
                 </div> <!-- /#primary -->
@@ -436,6 +419,9 @@
     <span class="tick"></span>
     <span class="cross"></span>
 </a>
+<script>
+
+</script>
 <input type="hidden" id="begin" value="${begin}">
 <input type="hidden" id="end" value="${end}">
 <input type="hidden" id="page" value="${page}">

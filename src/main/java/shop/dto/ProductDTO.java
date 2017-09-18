@@ -9,6 +9,10 @@ public class ProductDTO {
 
     private String name;
 
+    private String brand;
+
+    private String category;
+
     private String image;
 
     private String model;
@@ -25,6 +29,19 @@ public class ProductDTO {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", category='" + category + '\'' +
+                ", image='" + image + '\'' +
+                ", model='" + model + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
     public String getModel() {
         return model;
     }
@@ -33,14 +50,23 @@ public class ProductDTO {
         this.model = model;
     }
 
-    @Override
-    public String toString() {
-        return "ProductDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
-                ", price=" + price +
-                '}';
+
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public int getId() {

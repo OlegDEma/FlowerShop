@@ -69,14 +69,6 @@ public class ProductController {
 
         }
 
-        if(principal ==  null){
-
-        }else{
-            model.addAttribute("many",productService.getCartInfoProduct(principal));
-            model.addAttribute("price",userService.findOne(Integer.parseInt(principal.getName())).getCarts().get(0).getTotal());
-        }
-
-
         model.addAttribute("totalPages", products.getTotalPages());
         model.addAttribute("pages", pages);
         model.addAttribute("products", products);
@@ -108,11 +100,7 @@ public class ProductController {
             pages+= i+ "-";
 
         }
-
-
-
-
-            model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("totalPages", products.getTotalPages());
             model.addAttribute("pages", pages);
             model.addAttribute("products", products);
             model.addAttribute("type",sort);
@@ -128,23 +116,12 @@ public class ProductController {
     @RequestMapping(value="/addNewProduct",method = RequestMethod.GET)
     public String addNewProduct(@ModelAttribute("product")Product product, @RequestParam("brand") String brand , @RequestParam("category") String category,
                                 @RequestParam("man") String man, @RequestParam("model") String model){
-//		product.setBrand(brand);
-//		System.out.println(brand);
-//		System.out.println(brandService.findOne(Integer.parseInt(brand)));
+
         product.setCategory(categoryService.findOne(Integer.parseInt(category)));
         product.setBrand(brandService.findOne(Integer.parseInt(brand)));
         product.setManager(managerService.findOne(Integer.parseInt(man)));
-//		System.out.println(manager);
         product.setModel(modelService.findOne(Integer.parseInt(model)));
-//        System.out.println(product);
         productService.save(product);
-//		System.out.println(br);
-        return "redirect:/adminpanel";
-    }
-
-    @RequestMapping(value="/deleteProduct/{id}",method = RequestMethod.GET)
-    public String deleteProduct(@PathVariable("id") String id){
-        productService.delete(Integer.parseInt(id));
         return "redirect:/adminpanel";
     }
 
@@ -163,11 +140,6 @@ public class ProductController {
             productService.update(product);
 
         }
-      /*  session.setAttribute("do","change");*/
-
-
-
-
         return "redirect:/adminpanel";
     }
 
@@ -236,11 +208,6 @@ public class ProductController {
         for(int i = 0; i < products.getTotalPages(); i++){
             pages+= i+ "-";
         }
-
-
-
-
-
 
         model.addAttribute("totalPages", products.getTotalPages());
 

@@ -1,5 +1,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<script>
+    $('document').ready(function () {
+
+    })
+    function loadHomeProduct() {
+        $.ajax({
+            url: '/loadProduct',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (types) {
+                var all = '';
+                for (var i = 3; i < 8; i++) {
+                    var index = types[i].id;
+                    var name = types[i].name;
+                    var nameOfModel = types[i].model;
+                    var price = types[i].price;
+                    var category = types[i].category;
+                    var brand = types[i].brand;
+                    all +=  '<tr><td>'+name+'</td><td>'+nameOfModel+'</td><td>'+price+'</td>'+
+                        '<td>'+category+'</td><td>'+brand+'                    <a class="btnn" onclick="deleteProduct('+index+')">Видалити продукт</a></td></tr>';
+                }
+                $('#loadProduct').html(all);
+                // alert(types);
+            },
+            error:function () {
+                alert("ERROR");
+            }
+        })
+    }
+</script>
 <div class="tp-banner-container" id="home">
     <div class="tp-banner" >
         <ul style="padding-left: 0px">
@@ -84,49 +116,48 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="products-grid two-row ">
-                        <div class="item">
+                        <c:forEach items="${products}" var="product" begin="0" end="10">
+                            <div class="item">
+                                <div class="item-img">
+                                    <div class="item-img-info">
+                                        <div class="pimg">
+                                            <a href="#" class="product-image">
+                                                <img src="${product.image}" style="width: 250px; height: 200px;" class="attachment-shop_catalog" alt="Images">
+                                            </a>
+                                        </div> <!-- /.pimg -->
 
-                            <c:forEach items="${products}" var="product">
+                                        <div class="box-hover">
+                                            <ul class="add-to-links">
+                                                <sec:authorize access="hasRole('ROLE_USER')">
+                                                <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
+                                                <li><a class="add_to_cart_button" onclick="doAjax(${product.id})" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>
+                                                </sec:authorize>
+                                                <li>< <a href="/productdetails/${product.id}"><i class="fa fa-compress"></i></a></li>
+                                            </ul>
+                                        </div> <!-- /.box-hover -->
+                                    </div> <!-- /.item-img-info -->
+                                </div> <!-- /.item-img -->
+
+                                <div class="item-info">
+                                    <div class="info-inner">
+                                        <div class="item-title">
+                                            <a href="/productdetails/${product.id}">${product.name}</a>
+                                        </div> <!-- /.item-title -->
+
+                                        <div class="item-content">
+                                            <div class="item-price">
+                                                <div class="price-box">
+                                                    <ins><span class="amount">$${product.price}</span></ins>
+                                                </div>
+                                            </div> <!-- /.item-price -->
+                                        </div> <!-- /.item-content -->
+                                    </div> <!-- /.info-inner -->
+                                </div> <!-- /.item-info -->
+                            </div> <!-- /.item -->
 
 
-                            </c:forEach>
+                        </c:forEach>
 
-                            <div class="item-img">
-                                <div class="item-img-info">
-                                    <div class="pimg">
-                                        <a href="#" class="product-image">
-                                            <img src="img/page/index/10.jpg" class="attachment-shop_catalog" alt="Images">
-                                        </a>
-                                    </div> <!-- /.pimg -->
-
-                                    <div class="box-hover">
-                                        <ul class="add-to-links">
-                                            <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
-
-                                            <li><a class="add_to_cart_button" href="#" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>
-
-                                            <li><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
-                                        </ul>
-                                    </div> <!-- /.box-hover -->
-                                </div> <!-- /.item-img-info -->
-                            </div> <!-- /.item-img -->
-
-                            <div class="item-info">
-                                <div class="info-inner">
-                                    <div class="item-title">
-                                        <a href="#">LOREM IPSUM DOLOR SIT AMET</a>
-                                    </div> <!-- /.item-title -->
-
-                                    <div class="item-content">
-                                        <div class="item-price">
-                                            <div class="price-box">
-                                                <ins><span class="amount">$256.00</span></ins>
-                                            </div>
-                                        </div> <!-- /.item-price -->
-                                    </div> <!-- /.item-content -->
-                                </div> <!-- /.info-inner -->
-                            </div> <!-- /.item-info -->
-                        </div> <!-- /.item -->
 
                 </div>
             </div>
@@ -226,7 +257,8 @@
         <div class="container">
             <div class="row">
                 <div class="flat-product-banner col-md-8">
-                    <img src="img/page/index/20.jpg" alt="image">
+                    <img src="${products[12].image
+                    }" alt="image">
                     <div class="product-info">
                         <h2>DINING CHAIRS</h2>
                         <h1>COLLECTION 2016</h1>
@@ -237,22 +269,23 @@
 
                 <div class="flat-product-show col-md-4">
                     <ul class="products-list flat-reset btn-bg-26adc0">
+                <c:forEach items="${products}" var="product" begin="3" end="6">
                         <li class="item">
 
                             <div class="pimg">
                                 <a href="#" class="product-image">
-                                    <img src="img/page/index/21.jpg" class="wp-post-image" alt="Image">
+                                    <img src="${product.image}" style="height: 100px; width: 100px;" class="wp-post-image" alt="Image">
                                 </a>
                             </div> <!-- /.pimg -->
 
 
                             <div class="product-shop">
                                 <h2 class="product-name item-title">
-                                    <a href="#">LOREM IPSUM DOLOR SIT AMET</a>
+                                    <a href="#" style="color: black">${product.name}</a>
                                 </h2> <!-- /.product-name -->
 
                                 <div class="price-box">
-                                    <ins><span class="amount">$256.00</span></ins><del><span class="amount">$350.00</span></del>
+                                    <ins><span style="color: black" class="amount">$${product.price}</span></ins><del><span style="color: black" class="amount">$${product.price+10}</span></del>
                                 </div> <!-- /.price-box -->
 
                                 <div class="rating clearfix">
@@ -265,84 +298,18 @@
 
                                 <div class="actions clearfix">
                                     <ul class="add-to-links">
-                                        <li><a class="add_to_cart_button" href="#" title="Add card">Add To Cart</a></li>
-                                        <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
+                                        <sec:authorize access="hasRole('ROLE_USER')">
+                                            <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
+                                            <li><a class="add_to_cart_button" onclick="doAjax(${product.id})" title="Add card"><i class="fa fa-shopping-cart"></i></a></li>
+                                        </sec:authorize>
                                         <li><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
                                     </ul> <!-- /.add-to-links -->
                                 </div> <!-- /.actions -->
                             </div> <!-- /.product-shop -->
                         </li> <!-- /.item -->
-
-                        <li class="item">
-                            <div class="pimg">
-                                <a href="#" class="product-image">
-                                    <img src="img/page/index/22.jpg" class="wp-post-image" alt="Image">
-                                </a>
-                            </div> <!-- /.pimg -->
-
-                            <div class="product-shop">
-                                <h2 class="product-name item-title">
-                                    <a href="#">LOREM IPSUM DOLOR SIT AMET</a>
-                                </h2> <!-- /.product-name -->
-
-                                <div class="price-box">
-                                    <ins><span class="amount">$256.00</span></ins><del><span class="amount">$350.00</span></del>
-                                </div> <!-- /.price-box -->
-
-                                <div class="rating clearfix">
-                                    <div class="ratings">
-                                        <div class="rating-box">
-                                            <div style="width:60%" class="rating"></div>
-                                        </div>
-                                    </div> <!-- /.ratings -->
-                                </div> <!-- /.rating -->
-
-                                <div class="actions clearfix">
-                                    <ul class="add-to-links">
-                                        <li><a class="add_to_cart_button" href="#" title="Add card">Add To Cart</a></li>
-                                        <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
-                                        <li><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
-                                    </ul> <!-- /.add-to-links -->
-                                </div> <!-- /.actions -->
-                            </div> <!-- /.product-shop -->
-                        </li> <!-- /.item -->
-
-                        <li class="item">
-
-                            <div class="pimg">
-                                <a href="#" class="product-image">
-                                    <img src="img/page/index/23.jpg" class="wp-post-image" alt="Image">
-                                </a>
-                            </div> <!-- /.pimg -->
-
-
-                            <div class="product-shop">
-                                <h2 class="product-name item-title">
-                                    <a href="#">LOREM IPSUM DOLOR SIT AMET</a>
-                                </h2> <!-- /.product-name -->
-
-                                <div class="price-box">
-                                    <ins><span class="amount">$256.00</span></ins><del><span class="amount">$350.00</span></del>
-                                </div> <!-- /.price-box -->
-
-                                <div class="rating clearfix">
-                                    <div class="ratings">
-                                        <div class="rating-box">
-                                            <div style="width:60%" class="rating"></div>
-                                        </div>
-                                    </div> <!-- /.ratings -->
-                                </div> <!-- /.rating -->
-
-                                <div class="actions clearfix">
-                                    <ul class="add-to-links">
-                                        <li><a class="add_to_cart_button" href="#" title="Add card">Add To Cart</a></li>
-                                        <li><a href="#" class="link-wishlist" title="WishList"><i class="fa fa-heart"></i></a></li>
-                                        <li><a title="Quick View" class="quickview link-quickview"><i class="fa fa-compress"></i></a></li>
-                                    </ul> <!-- /.add-to-links -->
-                                </div> <!-- /.actions -->
-                            </div> <!-- /.product-shop -->
-                        </li> <!-- /.item -->
+                </c:forEach>
                     </ul>
+
                 </div> <!-- /.flat-product-show -->
             </div>
         </div>
@@ -355,26 +322,23 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="flat-top-title flat-background-trans">
-                        <h3>WHAT OUR CLIENTS SAY</h3>
+                        <h3>Відгуки</h3>
                     </div> <!-- /.flat-bottom-title -->
 
                     <div class="flat-testi-wrap">
                         <div class="item">
-                            <img src="img/page/index/29.jpg" alt="Image">
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer interdum sem ac magna. Integer in lectus sed ligula commodo commodo. In molestie, neque et porta lobortis, ligula sem auctor mauris,<br>
-                                a luctus lacus quam sit amet augue. Aliquam eu felis nullam vel erat</p>
+                            <img src="${products[3].image}" alt="Image">
+                            <p>Чудовий магазин</p>
                         </div> <!-- /.item -->
 
                         <div class="item">
-                            <img src="img/page/index/29.jpg" alt="Image">
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer interdum sem ac magna. Integer in lectus sed ligula commodo commodo. In molestie, neque et porta lobortis, ligula sem auctor mauris,<br>
-                                a luctus lacus quam sit amet augue. Aliquam eu felis nullam vel erat</p>
+                            <img src="${products[5].image}" alt="Image">
+                            <p>Чудовий магазин</p>
                         </div> <!-- /.item -->
 
                         <div class="item">
-                            <img src="img/page/index/29.jpg" alt="Image">
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer interdum sem ac magna. Integer in lectus sed ligula commodo commodo. In molestie, neque et porta lobortis, ligula sem auctor mauris,<br>
-                                a luctus lacus quam sit amet augue. Aliquam eu felis nullam vel erat</p>
+                            <img src="${products[11].image}" alt="Image">
+                            <p>Чудовий магазин</p>
                         </div> <!-- /.item -->
                     </div> <!-- /.flat-testi-wrap -->
                 </div><!-- /.col-md-12 -->

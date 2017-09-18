@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	private BCryptPasswordEncoder encoder;
 	
 	private final static String USERNAME = "demaoleg78@gmail.com";
-    private final static String PASSWORD = "d09111997";
+    private final static String PASSWORD = "qweqweqwe";
 	
 	public void save(User user) {
 		user.setRole(Role.ROLE_USER);
@@ -93,42 +93,42 @@ public class UserServiceImpl implements UserService,UserDetailsService {
 	
 		
 	}
-	
-	public String getClientIpAddr(HttpServletRequest request) {  
-	    String ip = request.getHeader("X-Forwarded-For");  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("Proxy-Client-IP");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("WL-Proxy-Client-IP");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("HTTP_X_FORWARDED_FOR");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("HTTP_X_FORWARDED");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("HTTP_CLIENT_IP");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("HTTP_FORWARDED_FOR");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("HTTP_FORWARDED");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("HTTP_VIA");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getHeader("REMOTE_ADDR");  
-	    }  
-	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-	        ip = request.getRemoteAddr();  
-	    }  
+
+	public String getClientIpAddr(HttpServletRequest request) {
+	    String ip = request.getHeader("X-Forwarded-For");
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("Proxy-Client-IP");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("WL-Proxy-Client-IP");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("HTTP_X_FORWARDED");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("HTTP_CLIENT_IP");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("HTTP_FORWARDED_FOR");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("HTTP_FORWARDED");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("HTTP_VIA");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("REMOTE_ADDR");
+	    }
+	    if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getRemoteAddr();
+	    }
 	    return ip;
 	}
 	

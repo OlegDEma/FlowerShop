@@ -344,6 +344,9 @@
 //}
 $(document).ready(function() {
     getTypes();
+    getModels();
+    loadProduct();
+
 });
 function doaAjax() {
     var brand;
@@ -532,16 +535,16 @@ function loadBrand() {
                 </div>
                 <div class="tbl-content">
                     <table cellpadding="0" cellspacing="0" border="0">
-                        <tbody>
-                        <c:forEach var="product" items="${products}">
+                        <tbody id="loadProduct">
+                     <%--   <c:forEach var="product" items="${products}">
                             <tr>
                                 <td>${product.name}</td>
                                 <td>${product.model.nameOfModel}</td>
                                 <td>${product.price}</td>
                                 <td>${product.category.name}</td>
-                                <td>${product.brand.name}                    <a class="btnn" href="deleteProduct/${product.id}" >Видалити продукт</a></td>
+                                <td>${product.brand.name}                    <a class="btnn" onclick="deleteProduct(${product.id})" >Видалити продукт</a></td>
                             </tr>
-                        </c:forEach>
+                        </c:forEach>--%>
 
 
                         </tbody>
@@ -692,21 +695,19 @@ function loadBrand() {
     <div id="menu4" style="display: none">
         <%--<div class="col-md-3">--%>
         <div class="formProd" >
-            <form:form modelAttribute="model" id="contact-form" class="form" action="addNewModel" enctype="multipart/form-data" method="get" role="form">
                 <ol class="inBlock">
                     <li>
 
 
-                        <form:input  path="nameOfModel" type="text" class="form-control" id="name"  placeholder="nameOfModel" />
+                        <input type="text" class="form-control" id="nameOfModel"  placeholder="nameOfModel" />
 
                     </li>
                     <li>
 
-                        <button style="background: silver; height: 25px; width: 100px; text-align: center;" type="submit" >Send</button>
+                        <button style="background: silver; height: 25px; width: 100px; text-align: center;" onclick="addNewModel()" >Send</button>
 
                     </li>
                 </ol>
-            </form:form>
         </div>
         <%--</div>--%>
 
@@ -723,16 +724,16 @@ function loadBrand() {
                 </table>
             </div>
             <div class="tbl-content">
-                <table cellpadding="0" cellspacing="0" border="0">
-                    <tbody>
-                    <c:forEach var="model" items="${models}">
-                        <tr>
+                <table  cellpadding="0" cellspacing="0" border="0">
+                    <tbody id="modelTable">
+                    <%--<c:forEach var="model" items="${models}">--%>
+                   <%--     <tr>
                         <td>${model.nameOfModel}</td>
                         <td> <a class="btnn" href="deleteModel/${model.id}" >Delete brand</a></td>
                         <td>  <a class="btnn" onclick="changeModel(${model.id})" >Modify</a></td>
 
-                    </tr>
-                    </c:forEach>
+                    </tr>--%>
+                    <%--</c:forEach>--%>
 
 
                     </tbody>

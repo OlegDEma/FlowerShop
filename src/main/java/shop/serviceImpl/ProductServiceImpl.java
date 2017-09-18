@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import shop.dao.CartDao;
 import shop.dao.ProductDao;
 import shop.dao.UserDao;
 import shop.entity.Cart;
@@ -32,6 +33,8 @@ public class ProductServiceImpl implements ProductService {
 	private ProductDao productDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private CartDao cartDao;
 	
 	public void save(Product product) {
 		productDao.save(product);
@@ -175,7 +178,17 @@ public class ProductServiceImpl implements ProductService {
 	public String getCartInfoProduct(Principal principal) {
 
 	User user = userDao.findOne(Integer.parseInt(principal.getName()));
-		Cart cart = user.getCarts().get(0);
+	if(user.getCarts().get(0) == null){
+        System.out.println("NNUULLLL");
+        Cart cart = new Cart();
+//		user.getCarts().add(cart);
+        cart.setName("default");
+		cart.setUser(user);
+		cartDao.save(cart);
+//		userDao.save(user);
+	}
+		User user1 = userDao.findOne(Integer.parseInt(principal.getName()));
+		Cart cart = user1.getCarts().get(0);
 		List<Product> list = cart.getProduct();
 		String numberOfprod = null ;
 		int i = 0;

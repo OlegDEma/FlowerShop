@@ -16,8 +16,6 @@ $(document).ready(function() {
         menu("createDelivery");
     }
 
-    // alert(location.href);
-//        alert(a);
 })
 
     function menuHelp(id){
@@ -119,7 +117,6 @@ function changeDelivery(id) {
 
 }
 function photo(id) {
-    // var form = $('#photo').attr('action','saveImageForProduct?${_csrf.parameterName}=${_csrf.token}');
     $('div[name="photo"]').css('display','block');
     $('input[name="id"]').attr('value',id);
 
@@ -156,22 +153,66 @@ function getTypes() {
 
             for (var i = 0; i < types.length; i++) {
                 var index = types[i].id;
-                all += '<tr><td>' + types[i].name + '</td><td><a class="btnn" onclick="deleteCountry('+types[i].id+ ') " >Delete brand</a></td><td>  <a class="btnn" onclick="changeBrand('+types[i].id+')" >Modify</a></td></tr>';
+                all += '<tr><td>' + types[i].name + '</td><td><a class="btnn" onclick="deleteBrand('+types[i].id+ ') " >Delete brand</a></td><td>  <a class="btnn" onclick="changeBrand('+types[i].id+')" >Modify</a></td></tr>';
             }
             $('#brandTable').html(all);
-            // alert(all);
         },
         error:function () {
-            alert("ERROR");
+
         }
     })
 }
 
-function deleteCountry(index) {
+function getModels() {
+    $.ajax({
+        url: '/loadModel',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (types) {
+            var all = '';
+            for (var i = 0; i < types.length; i++) {
+                var index = types[i].id;
+                var name = types[i].nameOfModel;
+                all +=  '<tr><td>'+name+'</td><td> <a class="btnn" onclick="deleteModel('+index+')" >Delete brand</a></td>'+
+                '<td><a class="btnn" onclick="changeModel('+index+'" >Modify</a></td></tr>';
+            }
+            $('#modelTable').html(all);
+
+        },
+        error:function () {
+        }
+    })
+}
+
+function loadProduct() {
+    $.ajax({
+        url: '/loadProduct',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (types) {
+            var all = '';
+            for (var i = 0; i < types.length; i++) {
+                var index = types[i].id;
+                var name = types[i].name;
+                var nameOfModel = types[i].model;
+                var price = types[i].price;
+                var category = types[i].category;
+                var brand = types[i].brand;
+                all +=  '<tr><td>'+name+'</td><td>'+nameOfModel+'</td><td>'+price+'</td>'+
+                '<td>'+category+'</td><td>'+brand+'                    <a class="btnn" onclick="deleteProduct('+index+')">Видалити продукт</a></td></tr>';
+            }
+            $('#loadProduct').html(all);
+        },
+        error:function () {
+        }
+    })
+}
+
+function deleteBrand(index) {
 
     $.ajax({
 
-        url: 'deleteCountry?' + $('input[name=csrf_name]').val() + "=" + $('input[name=csrf_value]').val(),
+        url: 'deleteBrand?' + $('input[name=csrf_name]').val() + "=" + $('input[name=csrf_value]').val(),
         method: 'POST',
         contentType: 'application/json; charset=UTF-8',
         dataType: 'json',
@@ -187,17 +228,47 @@ function deleteCountry(index) {
 
 }
 
-function doAjax(e){
+function deleteModel(index) {
+
     $.ajax({
-        url:'/addInCart/'+e,
-        data:({password : $('#password').val()}),
-        success:function(data){
-            cartInfo();
+
+        url: 'deleteModel?' + $('input[name=csrf_name]').val() + "=" + $('input[name=csrf_value]').val(),
+        method: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
+        data: '' + index,
+        success: function () {
+            getModels();
         },
         error:function () {
-            cartInfo();
+            getModels();
         }
-    });
+    })
+}
+
+function deleteProduct(index) {
+
+    $.ajax({
+
+        url: 'deleteProduct?' + $('input[name=csrf_name]').val() + "=" + $('input[name=csrf_value]').val(),
+        method: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+        dataType: 'json',
+        data: '' + index,
+        success: function () {
+            // getModels();
+            loadProduct();
+        },
+        error:function () {
+            // getModels();
+            loadProduct();
+        }
+    })
+}
+
+
+function doAjax(e){
+  var a = $("button[data-id='"+e+"']").click();
 }
 
 function searchText( string, needle ) {
@@ -212,8 +283,6 @@ $(document).ready(function () {
     $('#search').bind("keyup", function() {
 
             var search = $('#search').val();
-            // alert(search);
-            // var search = this.value();
         $.ajax({
             url: '/searchRes',
             type: 'GET',
@@ -237,20 +306,17 @@ $(document).ready(function () {
                 }
             },
             error:function (types) {
-                alert("ERROR");
             }
         })
 
     });
 
     $(".search_result").hover(function(){
-        $(".who").blur(); //Убираем фокус с input
+        $(".who").blur();
     })
 
-//При выборе результата поиска, прячем список и заносим выбранный результат в input
     $(".search_result").on("click", "li", function(){
         s_user = $(this).text();
-        //$(".who").val(s_user).attr('disabled', 'disabled'); //деактивируем input, если нужно
         $(".search_result").fadeOut();
     })
 
@@ -270,8 +336,99 @@ function cartInfo() {
             $('#userName').html(name);
         },
         error:function () {
-            alert("ERROR");
+            // alert("ERROR");
         }
     })
 }
 
+function addNewModel() {
+    var model;
+    model = {
+        nameOfModel: $('#nameOfModel').val()
+    };
+    $.ajax({
+        url: 'addNewModel?' + $('input[name=csrf_name]').val() + "=" + $('input[name=csrf_value]').val(),
+        method: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify(model),
+        success:function(data){
+            getModels();
+            $('#nameOfModel').val("");
+        },
+        error: function(xhr, status, errorThrown) {
+            alert("add faild "+ status + " " + errorThrown + " " + xhr);
+        }
+    });
+
+}
+var d = document,
+    itemBox = d.querySelectorAll('.item_box'),
+    cartCont = d.getElementById('cart_content');
+function addEvent(elem, type, handler){
+    if(elem.addEventListener){
+        elem.addEventListener(type, handler, false);
+    } else {
+        elem.attachEvent('on'+type, function(){ handler.call( elem ); });
+    }
+    return false;
+}
+
+function getCartData(){
+    return JSON.parse(localStorage.getItem('cart'));
+}
+
+function setCartData(o){
+    localStorage.setItem('cart', JSON.stringify(o));
+    return false;
+}
+
+function addToCart(e){
+    this.disabled = true;
+    var cartData = getCartData() || {},
+        parentBox = this.parentNode,
+        itemId = this.getAttribute('data-id'), // ID товара
+        itemTitle = parentBox.querySelector('.item_title').innerHTML,
+        itemImage = this.getAttribute('data-image'),
+        itemPrice = parentBox.querySelector('.item_price').innerHTML;
+    if(cartData.hasOwnProperty(itemId)){
+        cartData[itemId][2] += 1;
+    } else {
+        cartData[itemId] = [itemTitle, itemPrice, 1,itemImage];
+    }
+    if(!setCartData(cartData)){
+        this.disabled = false;
+    }
+    return false;
+}
+for(var i = 0; i < itemBox.length; i++){
+    addEvent(itemBox[i].querySelector('.add_item'), 'click', addToCart);
+}
+function openCart(e){
+    var cartData = getCartData(),
+        totalItems = '';
+    if(cartData !== null){
+        totalItems = '<table class="shopping_list"><tr><th>Наименование</th><th>Цена</th><th>Кол-во</th></tr>';
+        for(var items in cartData){
+            totalItems += '<tr>';
+            for(var i = 0; i < cartData[items].length-1; i++){
+                totalItems += '<td>' + cartData[items][i] + '</td>';
+                if(i == cartData[items].length-2){
+                    totalItems += '<td><img style="height: 100px; width: 100px;" src="' + cartData[items][i+1] + '"></td>';
+                }
+            }
+            totalItems += '</tr>';
+        }
+        totalItems += '</table>';
+        cartCont.innerHTML = totalItems;
+    } else {
+        cartCont.innerHTML = 'В корзине пусто!';
+    }
+    return false;
+}
+
+addEvent(d.getElementById('checkout'), 'click', openCart);
+
+addEvent(d.getElementById('clear_cart'), 'click', function(e){
+    localStorage.removeItem('cart');
+    cartCont.innerHTML = 'Корзина очишена.';
+});

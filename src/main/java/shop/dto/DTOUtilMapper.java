@@ -2,6 +2,7 @@ package shop.dto;
 
 import shop.entity.Brand;
 import shop.dto.BrandDTO;
+import shop.entity.Model;
 import shop.entity.Product;
 
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ public class DTOUtilMapper {
             productDTO.setImage(product.getImage());
             productDTO.setPrice(product.getPrice());
             productDTO.setModel(product.getModel().getNameOfModel());
+            productDTO.setBrand(product.getBrand().getName());
+            productDTO.setCategory(product.getCategory().getName());
 
 
             productDTOs.add(productDTO);
@@ -50,6 +53,25 @@ public class DTOUtilMapper {
         }
 
         return productDTOs;
+
+    }
+
+    public static List<ModelDTO> modelsTomodelsDTO(List<Model> models) {
+
+        List<ModelDTO> modelDTOs = new ArrayList<ModelDTO>();
+
+        for (Model model : models) {
+            ModelDTO modelDTO = new ModelDTO();
+
+            modelDTO.setId(model.getId());
+            modelDTO.setNameOfModel(model.getNameOfModel());
+
+
+            modelDTOs.add(modelDTO);
+
+        }
+
+        return modelDTOs;
 
     }
 }
